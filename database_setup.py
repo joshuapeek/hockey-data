@@ -35,7 +35,7 @@ class Player(Base):
     team = relationship(Team)
     height = Column(String(10))
     weight = Column(String(8))
-    birthdate = Column(Integer)
+    birthdate = Column(String(50))
     birthCity = Column(String(50))
     birthLocation = Column(String(50))
     birthNation = Column(String(50))

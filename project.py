@@ -18,7 +18,15 @@ session = DBSession()
 #Main page
 @app.route('/')
 def mainPage():
-    return "This is the main page!"
+    teams = session.query(Team)
+    players = session.query(Player).filter_by(team_id = team.id)
+    output = ''
+    for i in teams:
+        output += i.city
+        output += ' '
+        output += i.name
+        output += '</br>'
+    return output
 
 #Team page
 @app.route('/<int:team_id>/')
