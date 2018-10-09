@@ -34,6 +34,11 @@ def playerPage(team_id, player_id):
 ## ADMIN USE //////////////////////////////////////
 # These pages are served for admin users
 
+#Admin Login page
+@app.route('/login/')
+def adminLogin():
+    return "This is the admin login page."
+
 #Admin Control page
 @app.route('/admin/')
 def adminPage():
