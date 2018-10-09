@@ -19,9 +19,7 @@ session = DBSession()
 @app.route('/')
 def mainPage():
     team = session.query(Team).all()
-    #player = session.query(Player).filter_by(team_id = team.id)
     output = ''
-    #output += team.city
     for i in team:
         output += i.city
         output += ' '
@@ -32,7 +30,19 @@ def mainPage():
 #Team page
 @app.route('/<int:team_id>/')
 def teamPage(team_id):
-    return "This is the team page!"
+    team = session.query(Team).filter_by(id = team_id).one()
+    player = session.query(Player).filter_by(team_id = team.id)
+    output = ''
+    for i in player:
+        output += 'Name: '
+        output += i.firstName
+        output += ' '
+        output += i.lastName
+        output +='</br>'
+        output += 'Position: '
+        output += i.position
+        output += '</br></br>'
+    return output
 
 #Player page
 @app.route('/<int:team_id>/<int:player_id>/')
