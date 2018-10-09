@@ -15,7 +15,7 @@ session = DBSession()
 ## STANDARD USE //////////////////////////////////////
 # These pages are served for standard users
 
-#Main page
+#Main page - displays teams in db
 @app.route('/')
 def mainPage():
     team = session.query(Team).all()
@@ -27,7 +27,7 @@ def mainPage():
         output += '</br>'
     return output
 
-#Team page
+#Team page - displays players in db, from a given team
 @app.route('/<int:team_id>/')
 def teamPage(team_id):
     team = session.query(Team).filter_by(id = team_id).one()
@@ -44,7 +44,7 @@ def teamPage(team_id):
         output += '</br></br>'
     return output
 
-#Player page
+#Player page - displays player info in db, for a given team, player
 @app.route('/<int:team_id>/<int:player_id>/')
 def playerPage(team_id, player_id):
     return "This is the player page!"
@@ -58,7 +58,7 @@ def playerPage(team_id, player_id):
 def adminLogin():
     return "This is the admin login page."
 
-#Admin Control page
+#Admin Control page - displays admin controls for editing teams, players
 @app.route('/admin/')
 def adminPage():
     return "This is the admin control page."
