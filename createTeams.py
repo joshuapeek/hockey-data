@@ -110,7 +110,7 @@ session.commit()
 
 
 player6 = Player(firstName = "Nikita", lastName = "Kucherov", position = "RW",
-    team = tampaBay, height = """5' 11"'" """, weight = "178 lb", birthdate = "June 17, 1993", birthCity = "Maykop",
+    team = tampaBay, height = """5' 11" """, weight = "178 lb", birthdate = "June 17, 1993", birthCity = "Maykop",
     birthLocation = "", birthNation = "RUS", bio = """Kucherov was a second-round pick (No. 58) by the Tampa Bay Lightning in the 2011 NHL Draft, but he has played like a first-round talentselfself.
      The 5-foot-11, 178-pound forward from Moscow spent the 2011-12 season in Russia, then came to North America and played in the Quebec Major Junior Hockey League in 2012-13.""")
 

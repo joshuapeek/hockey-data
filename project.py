@@ -70,7 +70,7 @@ def playerPage(team_id, player_id):
         output += i.birthLocation
         if i.birthLocation != "":
             output += ', '
-        i.birthNation
+        output += i.birthNation
         output += '</br>'
         output += i.bio
         output += '</br></br>'
