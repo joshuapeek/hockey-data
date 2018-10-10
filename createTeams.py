@@ -135,6 +135,70 @@ player8 = Player(firstName = "David", lastName = "Pastrnak", position = "RW",
 session.add(player8)
 session.commit()
 
+# Secondary Players /////////////
+player9 = Player(firstName = "Secondary", lastName = "Player", position = "G",
+    team = toronto, height = """5' 10" """, weight = "175 lb", birthdate = "July 16, 1986", birthCity = "Lansing",
+    birthLocation = "Michigan", birthNation = "USA", bio = """Didn't start playing ice hockey until adulthood, and really... has no place in the NHL.""")
+
+session.add(player9)
+session.commit()
+
+
+player10 = Player(firstName = "Secondary", lastName = "Player", position = "G",
+    team = montreal, height = """5' 10" """, weight = "175 lb", birthdate = "July 16, 1986", birthCity = "Lansing",
+    birthLocation = "Michigan", birthNation = "USA", bio = """Didn't start playing ice hockey until adulthood, and really... has no place in the NHL.""")
+
+session.add(player10)
+session.commit()
+
+
+player11 = Player(firstName = "Secondary", lastName = "Player", position = "G",
+    team = ottawa, height = """5' 10" """, weight = "175 lb", birthdate = "July 16, 1986", birthCity = "Lansing",
+    birthLocation = "Michigan", birthNation = "USA", bio = """Didn't start playing ice hockey until adulthood, and really... has no place in the NHL.""")
+
+session.add(player11)
+session.commit()
+
+
+player12 = Player(firstName = "Secondary", lastName = "Player", position = "G",
+    team = tampaBay, height = """5' 10" """, weight = "175 lb", birthdate = "July 16, 1986", birthCity = "Lansing",
+    birthLocation = "Michigan", birthNation = "USA", bio = """Didn't start playing ice hockey until adulthood, and really... has no place in the NHL.""")
+
+session.add(player12)
+session.commit()
+
+
+player13 = Player(firstName = "Secondary", lastName = "Player", position = "G",
+    team = buffalo, height = """5' 10" """, weight = "175 lb", birthdate = "July 16, 1986", birthCity = "Lansing",
+    birthLocation = "Michigan", birthNation = "USA", bio = """Didn't start playing ice hockey until adulthood, and really... has no place in the NHL.""")
+
+session.add(player13)
+session.commit()
+
+
+player14 = Player(firstName = "Secondary", lastName = "Player", position = "G",
+    team = boston, height = """5' 10" """, weight = "175 lb", birthdate = "July 16, 1986", birthCity = "Lansing",
+    birthLocation = "Michigan", birthNation = "USA", bio = """Didn't start playing ice hockey until adulthood, and really... has no place in the NHL.""")
+
+session.add(player14)
+session.commit()
+
+
+player15 = Player(firstName = "Secondary", lastName = "Player", position = "G",
+    team = florida, height = """5' 10" """, weight = "175 lb", birthdate = "July 16, 1986", birthCity = "Lansing",
+    birthLocation = "Michigan", birthNation = "USA", bio = """Didn't start playing ice hockey until adulthood, and really... has no place in the NHL.""")
+
+session.add(player15)
+session.commit()
+
+
+player16 = Player(firstName = "Secondary", lastName = "Player", position = "G",
+    team = detroit, height = """5' 10" """, weight = "175 lb", birthdate = "July 16, 1986", birthCity = "Lansing",
+    birthLocation = "Michigan", birthNation = "USA", bio = """Didn't start playing ice hockey until adulthood, and really... has no place in the NHL.""")
+
+session.add(player16)
+session.commit()
+
 #player4 = Player(firstName = "", lastName = "", position = "",
 #    team_id = detroit, height = "", weight = "", birthdate = "", birthCity = "",
 #    birthLocation = "", birthNation = "", bio = "")

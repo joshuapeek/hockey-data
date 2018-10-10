@@ -34,46 +34,26 @@ def teamPage(team_id):
     player = session.query(Player).filter_by(team_id = team.id)
     output = ''
     for i in player:
-        output += 'Name: '
-        output += i.firstName
-        output += ' '
-        output += i.lastName
-        output +='</br>'
-        output += 'Position: '
-        output += i.position
-        output += '</br></br>'
+        output += 'Name: ' + i.firstName + ' ' + i.lastName + '</br>'
+        output += 'Position: ' + i.position + '</br></br>'
     return output
 
 #Player page - displays player info in db, for a given team, player
 @app.route('/<int:team_id>/<int:player_id>/')
 def playerPage(team_id, player_id):
     team = session.query(Team).filter_by(id = team_id).one()
-    player = session.query(Player).filter_by(team_id=team_id).all()
+    player = session.query(Player).filter_by(team_id=team_id, id=player_id).all()
     output = ''
     for i in player:
-        output += i.firstName
-        output += ' '
-        output += i.lastName
-        output += '</br>'
-        output += i.team.name
-        output += ' | '
-        output += i.position
-        output += '</br>'
-        output += i.height
-        output += ' | '
-        output += i. weight
-        output += ' | Birthdate: '
-        output += i.birthdate
-        output += '</br>'
-        output += i.birthCity
-        output += ', '
-        output += i.birthLocation
+        output += i.firstName + ' ' + i.lastName + '</br>'
+        output += i.team.city + ' ' + i.team.name + ' | ' + i.position + '</br>'
+        output += i.height + ' | ' + i.weight
+        output += ' | Birthdate: ' + i.birthdate + '</br>'
+        output += i.birthCity + ', ' + i.birthLocation
         if i.birthLocation != "":
             output += ', '
-        output += i.birthNation
-        output += '</br>'
-        output += i.bio
-        output += '</br></br>'
+        output += i.birthNation + '</br>'
+        output += i.bio + '</br></br></br>'
     return output
 #    return player.firstName
 
@@ -95,36 +75,36 @@ def adminPage():
 #New Team page
 @app.route('/new/', methods=['GET', 'POST'])
 def newTeamPage():
-    return "This is the create team page!"
+    return "This is the create a team page!"
 
 #New Player page
 @app.route('/<int:team_id>/new/', methods=['GET', 'POST'])
 def newPlayerPage(team_id):
-    return "This is the create player page!"
+    return "This is the create a player page!"
 
 
 ## EDIT --------------------------------------------
 #Edit Team page
 @app.route('/<int:team_id>/edit/', methods=['GET', 'POST'])
 def editTeamPage(team_id):
-    return "This is the edit team page."
+    return "This is the edit a team page."
 
 #Edit Player page
 @app.route('/<int:team_id>/<int:player_id>/edit/', methods=['GET', 'POST'])
 def editPlayerPage(team_id, player_id):
-    return "This is the edit player page."
+    return "This is the edit a player page."
 
 
 ## DELETE --------------------------------------------
 #Delete Team page
 @app.route('/<int:team_id>/delete/', methods=['GET', 'POST', 'DELETE'])
 def deleteTeamPage(team_id):
-    return "This is the delete player page."
+    return "This is the delete a team page."
 
 #Delete Player page
 @app.route('/<int:team_id>/<int:player_id>/delete/', methods=['GET', 'POST', 'DELETE'])
 def deletePlayerPage(team_id, player_id):
-    return "This is the delete player page."
+    return "This is the delete a player page."
 
 
 if __name__ == '__main__':
