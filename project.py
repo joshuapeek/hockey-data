@@ -47,8 +47,35 @@ def teamPage(team_id):
 #Player page - displays player info in db, for a given team, player
 @app.route('/<int:team_id>/<int:player_id>/')
 def playerPage(team_id, player_id):
-    return "This is the player page!"
-
+    team = session.query(Team).filter_by(id = team_id).one()
+    player = session.query(Player).filter_by(id = player_id).all()
+    output = ''
+    for i in player:
+        output += i.firstName
+        output += ' '
+        output += i.lastName
+        output += '</br>'
+        output += i.team.name
+        output += ' | '
+        output += i.position
+        output += '</br>'
+        output += i.height
+        output += ' | '
+        output += i. weight
+        output += ' | Birthdate: '
+        output += i.birthdate
+        output += '</br>'
+        output += i.birthCity
+        output += ', '
+        output += i.birthLocation
+        if i.birthLocation != "":
+            output += ', '
+        i.birthNation
+        output += '</br>'
+        output += i.bio
+        output += '</br></br>'
+    return output
+#    return player.firstName
 
 ## ADMIN USE //////////////////////////////////////
 # These pages are served for admin users
