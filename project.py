@@ -48,7 +48,7 @@ def teamPage(team_id):
 @app.route('/<int:team_id>/<int:player_id>/')
 def playerPage(team_id, player_id):
     team = session.query(Team).filter_by(id = team_id).one()
-    player = session.query(Player).filter_by(id = player_id).all()
+    player = session.query(Player).filter_by(team_id=team_id).all()
     output = ''
     for i in player:
         output += i.firstName
