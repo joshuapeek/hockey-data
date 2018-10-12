@@ -2,10 +2,13 @@ from flask import Flask, render_template, request, redirect, url_for
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Team, Player
+from sqlalchemy.pool import StaticPool
 
 app = Flask(__name__)
 
-engine = create_engine('sqlite:///hockey.db')
+engine = create_engine('sqlite:///hockey.db',
+    connect_args={'check_same_thread':False},
+    poolclass=StaticPool)
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -18,25 +21,27 @@ session = DBSession()
 #Main page - displays teams in db
 @app.route('/')
 def mainPage():
-    team = session.query(Team).all()
-    output = ''
-    for i in team:
-        output += i.city
-        output += ' '
-        output += i.name
-        output += '</br>'
-    return output
+    teams = session.query(Team).all()
+#    output = ''
+#    for i in team:
+#        output += i.city
+#        output += ' '
+#        output += i.name
+#        output += '</br>'
+#    return output
+    return render_template('teams.html', teams=teams)
 
 #Team page - displays players in db, from a given team
 @app.route('/<int:team_id>/')
 def teamPage(team_id):
     team = session.query(Team).filter_by(id = team_id).one()
-    player = session.query(Player).filter_by(team_id = team.id)
-    output = ''
-    for i in player:
-        output += 'Name: ' + i.firstName + ' ' + i.lastName + '</br>'
-        output += 'Position: ' + i.position + '</br></br>'
-    return output
+    players = session.query(Player).filter_by(team_id = team.id).all()
+#    output = ''
+#    for i in players:
+#        output += 'Name: ' + i.firstName + ' ' + i.lastName + '</br>'
+#        output += 'Position: ' + i.position + '</br></br>'
+#    return output
+    return render_template('roster.html', team=team, players=players)
 
 #Player page - displays player info in db, for a given team, player
 @app.route('/<int:team_id>/<int:player_id>/')
