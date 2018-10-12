@@ -97,7 +97,20 @@ def newPlayerPage(team_id):
 #Edit Team page
 @app.route('/<int:team_id>/edit/', methods=['GET', 'POST'])
 def editTeamPage(team_id):
-    return "This is the edit a team page."
+    editedTeam = session.query(Team).filter_by(id=team_id).one()
+    if request.method == 'POST':
+        if request.form['city']:
+            editedTeam.city=request.form['city']
+            editedTeam.name=request.form['name']
+        if request.form['conference'] != "":
+            editedTeam.conference=request.form['conference']
+        if request.form['division'] != "":
+            editedTeam.division=request.form['division']
+        session.add(editedTeam)
+        session.commit()
+        return redirect(url_for('mainPage'))
+    else:
+        return render_template('editTeam.html', i=editedTeam)
 
 #Edit Player page
 @app.route('/<int:team_id>/<int:player_id>/edit/', methods=['GET', 'POST'])

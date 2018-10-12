@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html>
   <body>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+
+  <ul>
+  {% for message in messages %}
+      <li> <strong> {{ message }} </strong> </li>
+  {% endfor %}
+  </ul>
+  {% endif %}
+{% endwith %}
+
     <h1>Teams</h1>
     {% for i in teams %}
-      {{ i.city }} {{ i.name }} - <a href="{{url_for('teamPage', team_id=i.id)}}">View Roster</a></br>
-      </br>
+      {{ i.city }} {{ i.name }}</br>
+      • <a href="{{url_for('teamPage', team_id=i.id)}}">View Roster</a></br>
+      • <a href="{{url_for('editTeamPage', team_id=i.id)}}">Edit Team</a></br>
+    </br></br>
     {% endfor %}
 
   </br>
