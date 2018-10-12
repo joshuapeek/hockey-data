@@ -3,7 +3,7 @@
   <body>
     <h1>Teams</h1>
     {% for i in teams %}
-      {{ i.city }} {{ i.name }}</br>
+      {{ i.city }} {{ i.name }} - <a href="{{url_for('teamPage', team_id=i.id)}}">View Roster</a></br>
       </br>
     {% endfor %}
   </body>

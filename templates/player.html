@@ -1,18 +1,17 @@
 <html>
   <body>
-    <h1>{{ teams.city }} {{ teams.name }}</h1>
-<!--    {% for i in players %} -->
-    <h3>{{ i.firstName }} {{ i.lastName }}</h3>
-    <b>Position:</b> {{ i.position }}</br>
-    <b>Height:</b> {{ i.height }}</br>
-    <b>Weight:</b> {{ i.weight }}</br>
-    <b>Born:</b> {{ i.birthdate }} {{ i.birthCity }},
-<!--
-    {% if i.birthLocation != "" %} {{ i.birthLocation }}, {% endif %}
-    {{ i.birthNation }}</br>
+    <h1>{{ team.city }} {{ team.name }}</h1>
+    <h2>{{ player.firstName }} {{ player.lastName }}</h2>
+    <b>Position:</b> {{ player.position }}</br>
+    <b>Height:</b> {{ player.height }}</br>
+    <b>Weight:</b> {{ player.weight }}</br>
+    <b>Born:</b> {{ player.birthdate }} {{ player.birthCity }},
+    {% if player.birthLocation != "" %} {{ player.birthLocation }}, {% endif %}
+    {{ player.birthNation }}</br>
+    <b>Bio:</b> {{ player.bio }}
 
-    <b>Bio:</b> {{ i.bio }}
-  </br></br>
-{% endfor %} -->
+    <br><br>
+    <a href='{{url_for('teamPage', team_id=team.id)}}'>Back to {{ team.name }} roster</a><br>
+    <a href='{{url_for('mainPage')}}'>Back to Teams</a>
   </body>
 </html>

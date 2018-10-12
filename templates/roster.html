@@ -4,8 +4,11 @@
     <h3>Roster:</h3>
     {% for i in players %}
     <b>Name:</b> {{ i.firstName }} {{ i.lastName }}<br>
-    <b>Position:</b> {{ i.position }}
+    <b>Position:</b> {{ i.position }}<br>
+    <a href='{{url_for('playerPage', team_id = team.id, player_id=i.id)}}'>View Bio</a>
   </br></br>
     {% endfor %}
+  <br>
+  <a href='{{url_for('mainPage')}}'>Back to Teams</a>
   </body>
 </html>

@@ -22,13 +22,6 @@ session = DBSession()
 @app.route('/')
 def mainPage():
     teams = session.query(Team).all()
-#    output = ''
-#    for i in team:
-#        output += i.city
-#        output += ' '
-#        output += i.name
-#        output += '</br>'
-#    return output
     return render_template('teams.html', teams=teams)
 
 #Team page - displays players in db, from a given team
@@ -36,31 +29,26 @@ def mainPage():
 def teamPage(team_id):
     team = session.query(Team).filter_by(id = team_id).one()
     players = session.query(Player).filter_by(team_id = team.id).all()
-#    output = ''
-#    for i in players:
-#        output += 'Name: ' + i.firstName + ' ' + i.lastName + '</br>'
-#        output += 'Position: ' + i.position + '</br></br>'
-#    return output
     return render_template('roster.html', team=team, players=players)
 
 #Player page - displays player info in db, for a given team, player
 @app.route('/<int:team_id>/<int:player_id>/')
 def playerPage(team_id, player_id):
     team = session.query(Team).filter_by(id = team_id).one()
-    player = session.query(Player).filter_by(team_id=team_id, id=player_id).all()
-    output = ''
-    for i in player:
-        output += i.firstName + ' ' + i.lastName + '</br>'
-        output += i.team.city + ' ' + i.team.name + ' | ' + i.position + '</br>'
-        output += i.height + ' | ' + i.weight
-        output += ' | Birthdate: ' + i.birthdate + '</br>'
-        output += i.birthCity + ', ' + i.birthLocation
-        if i.birthLocation != "":
-            output += ', '
-        output += i.birthNation + '</br>'
-        output += i.bio + '</br></br></br>'
-    return output
-#    return player.firstName
+    player = session.query(Player).filter_by(team_id=team_id, id=player_id).one()
+#    output = ''
+#    for i in player:
+#        output += i.firstName + ' ' + i.lastName + '</br>'
+#        output += i.team.city + ' ' + i.team.name + ' | ' + i.position + '</br>'
+#        output += i.height + ' | ' + i.weight
+#        output += ' | Birthdate: ' + i.birthdate + '</br>'
+#        output += i.birthCity + ', ' + i.birthLocation
+#        if i.birthLocation != "":
+#            output += ', '
+#        output += i.birthNation + '</br>'
+#        output += i.bio + '</br></br></br>'
+#    return output
+    return render_template('player.html', team=team, player=player)
 
 ## ADMIN USE //////////////////////////////////////
 # These pages are served for admin users
