@@ -102,9 +102,7 @@ def editTeamPage(team_id):
         if request.form['city']:
             editedTeam.city=request.form['city']
             editedTeam.name=request.form['name']
-        if request.form['conference'] != "":
             editedTeam.conference=request.form['conference']
-        if request.form['division'] != "":
             editedTeam.division=request.form['division']
         session.add(editedTeam)
         session.commit()
