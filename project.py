@@ -73,8 +73,7 @@ def newTeamPage():
 @app.route('/<int:team_id>/new/', methods=['GET', 'POST'])
 def newPlayerPage(team_id):
     if request.method == 'POST':
-        newPlayer = Player(
-        firstName=request.form['firstName'],
+        newPlayer = Player(firstName=request.form['firstName'],
         lastName=request.form['lastName'],
         position=request.form['position'],
         height=request.form['height'],
@@ -84,8 +83,7 @@ def newPlayerPage(team_id):
         birthLocation=request.form['birthLocation'],
         birthNation=request.form['birthNation'],
         bio=request.form['bio'],
-        team_id=team_id
-        )
+        team_id=team_id)
         session.add(newPlayer)
         session.commit()
         return redirect(url_for('teamPage', team_id=team_id))
