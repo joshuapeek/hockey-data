@@ -6,5 +6,8 @@
       {{ i.city }} {{ i.name }} - <a href="{{url_for('teamPage', team_id=i.id)}}">View Roster</a></br>
       </br>
     {% endfor %}
+
+  </br>
+  <a href='{{url_for('newTeamPage')}}'>Add a Team</a>
   </body>
 </html>
