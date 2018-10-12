@@ -10,5 +10,7 @@
     {% endfor %}
   <br>
   <a href='{{url_for('mainPage')}}'>Back to Teams</a>
+  <br>
+  <a href='{{url_for('newPlayerPage', team_id=team.id)}}'>Add a Player</a>
   </body>
 </html>

@@ -36,18 +36,6 @@ def teamPage(team_id):
 def playerPage(team_id, player_id):
     team = session.query(Team).filter_by(id = team_id).one()
     player = session.query(Player).filter_by(team_id=team_id, id=player_id).one()
-#    output = ''
-#    for i in player:
-#        output += i.firstName + ' ' + i.lastName + '</br>'
-#        output += i.team.city + ' ' + i.team.name + ' | ' + i.position + '</br>'
-#        output += i.height + ' | ' + i.weight
-#        output += ' | Birthdate: ' + i.birthdate + '</br>'
-#        output += i.birthCity + ', ' + i.birthLocation
-#        if i.birthLocation != "":
-#            output += ', '
-#        output += i.birthNation + '</br>'
-#        output += i.bio + '</br></br></br>'
-#    return output
     return render_template('player.html', team=team, player=player)
 
 ## ADMIN USE //////////////////////////////////////
@@ -73,7 +61,22 @@ def newTeamPage():
 #New Player page
 @app.route('/<int:team_id>/new/', methods=['GET', 'POST'])
 def newPlayerPage(team_id):
-    return "This is the create a player page!"
+    if request.method == 'POST':
+        newPlayer = Player(firstName=request.form['firstName'],
+        lastName=request.form['lastName'],
+        position=request.form['position'],
+        height=request.form['height'],
+        weight=request.form['weight'],
+        birthdate=request.form['birthdate'],
+        birthCity=request.form['birthCity'],
+        birthLocation=request.form['birthLocation'],
+        birthNation=request.form['birthNation'],
+        bio=request.form['bio'],team_id=team_id)
+        session.add(newPlayer)
+        session.commit()
+        return redirect(url_for('teamPage', team_id=team_id))
+    else:
+        return render_template('newPlayer.html',team_id=team_id)
 
 
 ## EDIT --------------------------------------------
