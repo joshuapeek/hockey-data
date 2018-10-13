@@ -118,12 +118,26 @@ def editPlayerPage(team_id, player_id):
 #Delete Team page
 @app.route('/<int:team_id>/delete/', methods=['GET', 'POST', 'DELETE'])
 def deleteTeamPage(team_id):
-    return "This is the delete a team page."
+    teamToDelete = session.query(
+    Team).filter_by(id=team_id).one()
+    if request.method == 'POST':
+        session.delete(teamToDelete)
+        session.commit()
+        return redirect(url_for('mainPage'))
+    else:
+        return render_template('deleteTeam.html', i=teamToDelete)
 
 #Delete Player page
 @app.route('/<int:team_id>/<int:player_id>/delete/', methods=['GET', 'POST', 'DELETE'])
 def deletePlayerPage(team_id, player_id):
-    return "This is the delete a player page."
+    playerToDelete = session.query(
+    Player).filter_by(team_id=team_id, id=player_id).one()
+    if request.method == 'POST':
+        session.delete(playerToDelete)
+        session.commit()
+        return redirect(url_for('teamPage', team_id=team_id))
+    else:
+        return render_template('deletePlayer.html', i=playerToDelete)
 
 
 if __name__ == '__main__':
