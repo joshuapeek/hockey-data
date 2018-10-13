@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Team, Player
@@ -65,6 +65,7 @@ def newTeamPage():
         )
         session.add(newTeam)
         session.commit()
+        flash("New Team Created!")
         return redirect(url_for('mainPage'))
     else:
         return render_template('newTeam.html')
@@ -86,6 +87,7 @@ def newPlayerPage(team_id):
         team_id=team_id)
         session.add(newPlayer)
         session.commit()
+        flash("New Player Created!")
         return redirect(url_for('teamPage', team_id=team_id))
     else:
         return render_template('newPlayer.html',team_id=team_id)
@@ -104,6 +106,7 @@ def editTeamPage(team_id):
             editedTeam.division=request.form['division']
         session.add(editedTeam)
         session.commit()
+        flash("Team Edited!")
         return redirect(url_for('mainPage'))
     else:
         return render_template('editTeam.html', i=editedTeam)
@@ -127,6 +130,7 @@ def editPlayerPage(team_id, player_id):
             editedPlayer.bio=request.form['bio']
         session.add(editedPlayer)
         session.commit()
+        flash("Player Edited!")
         return redirect(url_for('playerPage', team_id = team_id, player_id=editedPlayer.id))
     else:
         return render_template('editPlayer.html', i=editedPlayer, team_id=team_id)
@@ -141,6 +145,7 @@ def deleteTeamPage(team_id):
     if request.method == 'POST':
         session.delete(teamToDelete)
         session.commit()
+        flash("Team Removed!")
         return redirect(url_for('mainPage'))
     else:
         return render_template('deleteTeam.html', i=teamToDelete)
@@ -153,11 +158,13 @@ def deletePlayerPage(team_id, player_id):
     if request.method == 'POST':
         session.delete(playerToDelete)
         session.commit()
+        flash("Player Removed!")
         return redirect(url_for('teamPage', team_id=team_id))
     else:
         return render_template('deletePlayer.html', i=playerToDelete)
 
 
 if __name__ == '__main__':
+    app.secret_key = 'super_secret_key'
     app.debug = True
     app.run(host='0.0.0.0', port=5000)

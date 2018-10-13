@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html>
   <body>
-
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-
-  <ul>
-  {% for message in messages %}
-      <li> <strong> {{ message }} </strong> </li>
-  {% endfor %}
-  </ul>
-  {% endif %}
-{% endwith %}
-
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li><strong>{{message}}</strong></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
     <h1>Teams</h1>
     {% for i in teams %}
       {{ i.city }} {{ i.name }}</br>
