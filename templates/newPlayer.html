@@ -3,9 +3,9 @@
     <h1>Add New Player</h1>
     <form action='{{url_for('newPlayerPage', team_id=team_id)}}'
     method='post'>
-      <p>First Name: <input type='text' size='30' name='firstName'></p>
-      <p>Last Name: <input type='text' size='30' name='lastName'></p>
-      <p>Position: <input type='text' size='30' name='position'></p>
+      <p>First Name: <input type='text' size='30' name='firstName' required></p>
+      <p>Last Name: <input type='text' size='30' name='lastName' required></p>
+      <p>Position: <input type='text' size='30' name='position' required></p>
       <p>Height: <input type='text' size='30' name='height'></p>
       <p>Weight: <input type='text' size='30' name='weight'></p>
       <p>Birthdate: <input type='text' size='30' name='birthdate'></p>

@@ -2,16 +2,23 @@
   <body>
     <h1>Add New Team</h1>
     <form action='{{url_for('newTeamPage')}}' method='post'>
-      <p>City: <input type='text' size='30' name='city'></p>
-      <p>Name: <input type='text' size='30' name='name'></p>
+      <p>City: <input type='text' size='30' name='city'
+        required></p>
+      <p>Name: <input type='text' size='30' name='name' required></p>
       <p>Conference: </br>
-        <input type='radio' name='conference' value='Eastern'>Eastern</br>
-        <input type='radio' name='conference' value='Western'>Western</br></p>
+        <input type='radio' name='conference' value='Eastern'
+        required>Eastern</br>
+        <input type='radio' name='conference' value='Western'
+        required>Western</br></p>
       <p>Division: </br>
-        <input type='radio' name='division' value='Atlantic'>(E) Atlantic</br>
-        <input type='radio' name='division' value='Metropolitan'>(E) Metropolitan</br>
-        <input type='radio' name='division' value='Central'>(W) Central</br>
-        <input type='radio' name='division' value='Pacific'>(W) Pacific</br></p>
+        <input type='radio' name='division' value='Atlantic'
+        required>(E) Atlantic</br>
+        <input type='radio' name='division' value='Metropolitan'
+        required>(E) Metropolitan</br>
+        <input type='radio' name='division' value='Central'
+        required>(W) Central</br>
+        <input type='radio' name='division' value='Pacific'
+        required>(W) Pacific</br></p>
       <p><input type='submit' value='Create'></p>
     </form>
     </br>

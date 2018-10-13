@@ -1,0 +1,31 @@
+<html>
+  <body>
+    <h1>Edit {{i.firstName}} {{i.lastName}}</h1>
+    <form action='{{url_for('editPlayerPage',
+    team_id=team_id, player_id=i.id)}}'
+    method='post'>
+      <p>First Name: <input type='text' size='30'
+        name='firstName' placeholder='{{i.firstName}}' required></p>
+      <p>Last Name: <input type='text' size='30'
+        name='lastName' placeholder='{{i.lastName}}' required></p>
+      <p>Position: <input type='text' size='30'
+        name='position' placeholder='{{i.position}}' required></p>
+      <p>Height: <input type='text' size='30'
+        name='height' placeholder='{{i.height}}'></p>
+      <p>Weight: <input type='text' size='30'
+        name='weight' placeholder='{{i.weight}}'></p>
+      <p>Birthdate: <input type='text' size='30'
+        name='birthdate' placeholder='{{i.birthdate}}'></p>
+      <p>Birth City: <input type='text' size='30'
+        name='birthCity' placeholder='{{i.birthCity}}'>
+      <p>Birth Location: <input type='text' size='30'
+        name='birthLocation' placeholder='{{i.birthLocation}}'></p>
+      <p>Birth Nation: <input type='text' size='30'
+        name='birthNation' placeholder='{{i.birthNation}}'></p>
+      <p>Bio:<input type='text' size='30'
+        name='bio' placeholder='{{i.bio}}'></p>
+      <p><input type='submit' value='Edit'></p>
+    </form>
+    <a href='..'>Cancel / Back to Player Bio</a><br>
+  </body>
+</html>

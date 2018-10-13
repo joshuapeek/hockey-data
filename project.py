@@ -111,7 +111,25 @@ def editTeamPage(team_id):
 #Edit Player page
 @app.route('/<int:team_id>/<int:player_id>/edit/', methods=['GET', 'POST'])
 def editPlayerPage(team_id, player_id):
-    return "This is the edit a player page."
+    editedPlayer = session.query(
+    Player).filter_by(team_id=team_id, id=player_id).one()
+    if request.method == 'POST':
+        if request.form['firstName']:
+            editedPlayer.firstName=request.form['firstName']
+            editedPlayer.lastName=request.form['lastName']
+            editedPlayer.position=request.form['position']
+            editedPlayer.height=request.form['height']
+            editedPlayer.weight=request.form['weight']
+            editedPlayer.birthdate=request.form['birthdate']
+            editedPlayer.birthCity=request.form['birthCity']
+            editedPlayer.birthLocation=request.form['birthLocation']
+            editedPlayer.birthNation=request.form['birthNation']
+            editedPlayer.bio=request.form['bio']
+        session.add(editedPlayer)
+        session.commit()
+        return redirect(url_for('playerPage', team_id = team_id, player_id=editedPlayer.id))
+    else:
+        return render_template('editPlayer.html', i=editedPlayer, team_id=team_id)
 
 
 ## DELETE --------------------------------------------

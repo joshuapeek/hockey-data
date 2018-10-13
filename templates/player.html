@@ -11,8 +11,12 @@
     <b>Bio:</b> {{ player.bio }}
 
     <br><br>
-    <a href='{{url_for('deletePlayerPage',team_id=team.id,player_id=player.id)}}'>Delete Player</a></br>
-    <a href='{{url_for('teamPage', team_id=team.id)}}'>Back to {{ team.name }} roster</a><br>
+    <a href='{{url_for('deletePlayerPage',
+      team_id=team.id,player_id=player.id)}}'>Delete Player</a> |
+    <a href='{{url_for('editPlayerPage',
+      team_id=team.id,player_id=player.id)}}'>Edit Player</a></br>
+    <a href='{{url_for('teamPage',
+      team_id=team.id)}}'>Back to {{ team.name }} roster</a><br>
     <a href='{{url_for('mainPage')}}'>Back to Teams</a>
   </body>
 </html>
