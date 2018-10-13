@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Team, Player
@@ -28,7 +28,7 @@ def mainPage():
 @app.route('/<int:team_id>/')
 def teamPage(team_id):
     team = session.query(Team).filter_by(id = team_id).one()
-    players = session.query(Player).filter_by(team_id = team.id).all()
+    players = session.query(Player).filter_by(team_id = team_id).all()
     return render_template('roster.html', team=team, players=players)
 
 #Player page - displays player info in db, for a given team, player
@@ -37,6 +37,20 @@ def playerPage(team_id, player_id):
     team = session.query(Team).filter_by(id = team_id).one()
     player = session.query(Player).filter_by(team_id=team_id, id=player_id).one()
     return render_template('player.html', team=team, player=player)
+
+
+## API USE //////////////////////////////////////
+# These pages are served via API request
+
+#Main page - displayed as JSON/API
+@app.route('/JSON')
+def mainPageJSON():
+    teams = session.query(Team).all()
+    return jsonify(Team=[t.serialize for t in teams])
+
+
+
+
 
 ## ADMIN USE //////////////////////////////////////
 # These pages are served for admin users
