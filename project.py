@@ -3,6 +3,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Team, Player
 from sqlalchemy.pool import StaticPool
+from flask import session as login_session
+import random
+import string
 
 app = Flask(__name__)
 
@@ -66,13 +69,21 @@ def playerPageJSON(team_id, player_id):
 
 
 
-## ADMIN USE //////////////////////////////////////
-# These pages are served for admin users
+## AUTHENTICATION //////////////////////////////////////
+# These pages allow admin users to authenticate
 
 #Admin Login page
 @app.route('/login/')
 def adminLogin():
-    return "This is the admin login page."
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
+    for x in xrange(32))
+    login_session['state'] = state
+    return "The current session state is %s" % login_session['state']
+
+
+
+## ADMIN USE //////////////////////////////////////
+# These pages are served for admin users
 
 #Admin Control page - displays admin controls for editing teams, players
 @app.route('/admin/')
@@ -166,7 +177,7 @@ def editPlayerPage(team_id, player_id):
 
 ## DELETE --------------------------------------------
 #Delete Team page
-@app.route('/<int:team_id>/delete/', methods=['GET', 'POST', 'DELETE'])
+@app.route('/<int:team_id>/delete/', methods=['GET', 'POST'])
 def deleteTeamPage(team_id):
     teamToDelete = session.query(
     Team).filter_by(id=team_id).one()
@@ -179,7 +190,7 @@ def deleteTeamPage(team_id):
         return render_template('deleteTeam.html', i=teamToDelete)
 
 #Delete Player page
-@app.route('/<int:team_id>/<int:player_id>/delete/', methods=['GET', 'POST', 'DELETE'])
+@app.route('/<int:team_id>/<int:player_id>/delete/', methods=['GET', 'POST'])
 def deletePlayerPage(team_id, player_id):
     playerToDelete = session.query(
     Player).filter_by(team_id=team_id, id=player_id).one()
