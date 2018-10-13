@@ -50,7 +50,6 @@ class Player(Base):
             'lastName' : self.lastName,
             'position' : self.position,
             'team_id' : self.team_id,
-            'team' : self.team,
             'height' : self.height,
             'weight' : self.weight,
             'birthdate' : self.birthdate,

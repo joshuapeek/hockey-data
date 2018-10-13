@@ -42,13 +42,18 @@ def playerPage(team_id, player_id):
 ## API USE //////////////////////////////////////
 # These pages are served via API request
 
-#Main page - displayed as JSON/API
+#Main page: displays teams in db, serialized in JSON format
 @app.route('/JSON')
 def mainPageJSON():
     teams = session.query(Team).all()
     return jsonify(Team=[t.serialize for t in teams])
 
-
+#Team page: displays players from a given team in db, serialized in JSON format
+@app.route('/<int:team_id>/JSON')
+def teamPageJSON(team_id):
+    team = session.query(Team).filter_by(id = team_id).one()
+    players = session.query(Player).filter_by(team_id = team_id).all()
+    return jsonify(Roster=[i.serialize for i in players])
 
 
 
