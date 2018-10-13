@@ -15,6 +15,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+
 ## STANDARD USE //////////////////////////////////////
 # These pages are served for standard users
 
@@ -39,21 +40,29 @@ def playerPage(team_id, player_id):
     return render_template('player.html', team=team, player=player)
 
 
+
 ## API USE //////////////////////////////////////
 # These pages are served via API request
 
-#Main page: displays teams in db, serialized in JSON format
+#JSON Main page: displays teams in db, serialized
 @app.route('/JSON')
 def mainPageJSON():
     teams = session.query(Team).all()
     return jsonify(Team=[t.serialize for t in teams])
 
-#Team page: displays players from a given team in db, serialized in JSON format
+#JSON Team page: displays players from a given team in db, serialized
 @app.route('/<int:team_id>/JSON')
 def teamPageJSON(team_id):
     team = session.query(Team).filter_by(id = team_id).one()
     players = session.query(Player).filter_by(team_id = team_id).all()
     return jsonify(Roster=[i.serialize for i in players])
+
+#JSON Player page: displays player info in db, serialized
+@app.route('/<int:team_id>/<int:player_id>/JSON')
+def playerPageJSON(team_id, player_id):
+    team = session.query(Team).filter_by(id = team_id).one()
+    player = session.query(Player).filter_by(team_id=team_id, id=player_id).one()
+    return jsonify(Player=player.serialize)
 
 
 
