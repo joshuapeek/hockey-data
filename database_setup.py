@@ -5,6 +5,7 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
+
 class Team(Base):
     __tablename__ = 'team'
 
@@ -18,12 +19,13 @@ class Team(Base):
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-            'id' : self.id,
-            'city' : self.city,
-            'name' : self.name,
-            'conference' : self.conference,
-            'division' : self.division
+            'id': self.id,
+            'city': self.city,
+            'name': self.name,
+            'conference': self.conference,
+            'division': self.division
         }
+
 
 class Player(Base):
     __tablename__ = 'player'
@@ -45,18 +47,18 @@ class Player(Base):
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-            'id' : self.id,
-            'firstName' : self.firstName,
-            'lastName' : self.lastName,
-            'position' : self.position,
-            'team_id' : self.team_id,
-            'height' : self.height,
-            'weight' : self.weight,
-            'birthdate' : self.birthdate,
-            'birthCity' : self.birthCity,
-            'birthLocation' : self.birthLocation,
-            'birthNation' : self.birthNation,
-            'bio' : self.bio
+            'id': self.id,
+            'firstName': self.firstName,
+            'lastName': self.lastName,
+            'position': self.position,
+            'team_id': self.team_id,
+            'height': self.height,
+            'weight': self.weight,
+            'birthdate': self.birthdate,
+            'birthCity': self.birthCity,
+            'birthLocation': self.birthLocation,
+            'birthNation': self.birthNation,
+            'bio': self.bio
         }
 
 engine = create_engine('sqlite:///hockey.db')
