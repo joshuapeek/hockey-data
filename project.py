@@ -15,84 +15,90 @@ from flask import make_response
 import requests
 
 CLIENT_ID = json.loads(
-open('client_secrets.json', 'r').read())['web']['client_id']
+    open('client_secrets.json', 'r').read())['web']['client_id']
 CLIENT_SECRET = json.loads(
-open('client_secrets.json', 'r').read())['web']['client_secret']
+    open('client_secrets.json', 'r').read())['web']['client_secret']
 redirect_uris = json.loads(
-open('client_secrets.json', 'r').read())['web']['redirect_uris']
+    open('client_secrets.json', 'r').read())['web']['redirect_uris']
 
 app = Flask(__name__)
 
 engine = create_engine('sqlite:///hockey.db',
-    connect_args={'check_same_thread':False},
-    poolclass=StaticPool)
+                       connect_args={'check_same_thread': False},
+                       poolclass=StaticPool)
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-
-
-## STANDARD USE //////////////////////////////////////
+# STANDARD USE //////////////////////////////////////
 # These pages are served for standard users
 
-#Main page - displays teams in db
+
+# Main page - displays teams in db
 @app.route('/')
 def mainPage():
     teams = session.query(Team).all()
     return render_template('teams.html', teams=teams)
 
-#Team page - displays players in db, from a given team
+
+# Team page - displays players in db, from a given team
 @app.route('/<int:team_id>/')
 def teamPage(team_id):
-    team = session.query(Team).filter_by(id = team_id).one()
-    players = session.query(Player).filter_by(team_id = team_id).all()
+    team = session.query(Team).filter_by(id=team_id).one()
+    players = session.query(Player).filter_by(team_id=team_id).all()
     return render_template('roster.html', team=team, players=players)
 
-#Player page - displays player info in db, for a given team, player
+
+# Player page - displays player info in db, for a given team, player
 @app.route('/<int:team_id>/<int:player_id>/')
 def playerPage(team_id, player_id):
-    team = session.query(Team).filter_by(id = team_id).one()
-    player = session.query(Player).filter_by(team_id=team_id, id=player_id).one()
+    team = session.query(Team).filter_by(id=team_id).one()
+    player = session.query(Player).filter_by(
+        team_id=team_id, id=player_id).one()
     return render_template('player.html', team=team, player=player)
 
 
-
-## API USE //////////////////////////////////////
+# API USE //////////////////////////////////////
 # These pages are served via API request
 
-#JSON Main page: displays teams in db, serialized
+
+# JSON Main page: displays teams in db, serialized
 @app.route('/JSON')
 def mainPageJSON():
     teams = session.query(Team).all()
     return jsonify(Team=[t.serialize for t in teams])
 
-#JSON Team page: displays players from a given team in db, serialized
+
+# JSON Team page: displays players from a given team in db, serialized
 @app.route('/<int:team_id>/JSON')
 def teamPageJSON(team_id):
-    team = session.query(Team).filter_by(id = team_id).one()
-    players = session.query(Player).filter_by(team_id = team_id).all()
+    team = session.query(Team).filter_by(id=team_id).one()
+    players = session.query(Player).filter_by(team_id=team_id).all()
     return jsonify(Roster=[i.serialize for i in players])
 
-#JSON Player page: displays player info in db, serialized
+
+# JSON Player page: displays player info in db, serialized
 @app.route('/<int:team_id>/<int:player_id>/JSON')
 def playerPageJSON(team_id, player_id):
-    team = session.query(Team).filter_by(id = team_id).one()
-    player = session.query(Player).filter_by(team_id=team_id, id=player_id).one()
+    team = session.query(Team).filter_by(id=team_id).one()
+    player = session.query(Player).filter_by(
+        team_id=team_id, id=player_id).one()
     return jsonify(Player=player.serialize)
 
 
-
-## AUTHENTICATION //////////////////////////////////////
+# AUTHENTICATION //////////////////////////////////////
 # These pages allow admin users to authenticate
 
-#Admin Login page
+
+# Admin Login page
 @app.route('/login/')
 def adminLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
-    for x in xrange(32))
+                    for x in xrange(32))
     login_session['state'] = state
     return render_template('login.html', STATE=state)
+
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
@@ -146,8 +152,8 @@ def gconnect():
     stored_access_token = login_session.get('access_token')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_access_token is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is already connected.'),
-                                 200)
+        response = make_response(json.dumps(
+            'Current user is already connected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -172,66 +178,68 @@ def gconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;'
+    output += '-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
     print "done!"
     return output
 
-#Admin Sign-out: Revokes current user's token, resets login_session
+
+# Admin Sign-out: Revokes current user's token, resets login_session
 @app.route('/gdisconnect')
 def gdisconnect():
-    #Only disconnect a connected user
-    access_token=login_session.get('access_token')
+    # Only disconnect a connected user
+    access_token = login_session.get('access_token')
     if access_token is None:
         response = make_response(
-        json.dumps('Current user not connected.'), 401)
-        response.headers['Content-Type']='application/json'
+            json.dumps('Current user not connected.'), 401)
+        response.headers['Content-Type'] = 'application/json'
         return response
-    #Execute HTTP GET to revoke token
-    url='https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
+    # Execute HTTP GET to revoke token
+    url = 'https://accounts.google.com/o/oauth2/revoke?'
+    url += 'token=%s' % login_session['access_token']
     h = httplib2.Http()
-    result = h.request(url,'GET')[0]
-    if result['status'] =='200':
-        #Reset the user's session
+    result = h.request(url, 'GET')[0]
+    if result['status'] == '200':
+        # Reset the user's session
         del login_session['access_token']
         del login_session['gplus_id']
         del login_session['username']
         del login_session['email']
         del login_session['picture']
-        response=make_response(json.dumps('Successfully disconnected.'), 200)
-        response.headers['Content-Type']='application/json'
+        response = make_response(json.dumps('Successfully disconnected.'), 200)
+        response.headers['Content-Type'] = 'application/json'
         return response
     else:
-        #The token was invalid for some reason
-        response=make_response(
-        json.dumps('Failed to revoke token for given user.'), 400)
-        response.headers['Content-Type']='application/json'
+        # The token was invalid for some reason
+        response = make_response(
+            json.dumps('Failed to revoke token for given user.'), 400)
+        response.headers['Content-Type'] = 'application/json'
         return response
 
 
-
-## ADMIN USE //////////////////////////////////////
+# ADMIN USE //////////////////////////////////////
 # These pages are served for admin users
 
-#Admin Control page - displays admin controls for editing teams, players
+
+# Admin Control page - displays admin controls for editing teams, players
 @app.route('/admin/')
 def adminPage():
     return "This is the admin control page."
 
 
-## NEW --------------------------------------------
-#New Team page
+# NEW --------------------------------------------
+# New Team page
 @app.route('/new/', methods=['GET', 'POST'])
 def newTeamPage():
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
         newTeam = Team(
-        city=request.form['city'],
-        name=request.form['name'],
-        conference=request.form['conference'],
-        division=request.form['division'],
-        )
+                       city=request.form['city'],
+                       name=request.form['name'],
+                       conference=request.form['conference'],
+                       division=request.form['division'],)
         session.add(newTeam)
         session.commit()
         flash("New Team Created!")
@@ -239,33 +247,34 @@ def newTeamPage():
     else:
         return render_template('newTeam.html')
 
-#New Player page
+
+# New Player page
 @app.route('/<int:team_id>/new/', methods=['GET', 'POST'])
 def newPlayerPage(team_id):
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
         newPlayer = Player(firstName=request.form['firstName'],
-        lastName=request.form['lastName'],
-        position=request.form['position'],
-        height=request.form['height'],
-        weight=request.form['weight'],
-        birthdate=request.form['birthdate'],
-        birthCity=request.form['birthCity'],
-        birthLocation=request.form['birthLocation'],
-        birthNation=request.form['birthNation'],
-        bio=request.form['bio'],
-        team_id=team_id)
+                           lastName=request.form['lastName'],
+                           position=request.form['position'],
+                           height=request.form['height'],
+                           weight=request.form['weight'],
+                           birthdate=request.form['birthdate'],
+                           birthCity=request.form['birthCity'],
+                           birthLocation=request.form['birthLocation'],
+                           birthNation=request.form['birthNation'],
+                           bio=request.form['bio'],
+                           team_id=team_id)
         session.add(newPlayer)
         session.commit()
         flash("New Player Created!")
         return redirect(url_for('teamPage', team_id=team_id))
     else:
-        return render_template('newPlayer.html',team_id=team_id)
+        return render_template('newPlayer.html', team_id=team_id)
 
 
-## EDIT --------------------------------------------
-#Edit Team page
+# EDIT --------------------------------------------
+# Edit Team page
 @app.route('/<int:team_id>/edit/', methods=['GET', 'POST'])
 def editTeamPage(team_id):
     if 'username' not in login_session:
@@ -273,10 +282,10 @@ def editTeamPage(team_id):
     editedTeam = session.query(Team).filter_by(id=team_id).one()
     if request.method == 'POST':
         if request.form['city']:
-            editedTeam.city=request.form['city']
-            editedTeam.name=request.form['name']
-            editedTeam.conference=request.form['conference']
-            editedTeam.division=request.form['division']
+            editedTeam.city = request.form['city']
+            editedTeam.name = request.form['name']
+            editedTeam.conference = request.form['conference']
+            editedTeam.division = request.form['division']
         session.add(editedTeam)
         session.commit()
         flash("Team Edited!")
@@ -284,41 +293,44 @@ def editTeamPage(team_id):
     else:
         return render_template('editTeam.html', i=editedTeam)
 
-#Edit Player page
+
+# Edit Player page
 @app.route('/<int:team_id>/<int:player_id>/edit/', methods=['GET', 'POST'])
 def editPlayerPage(team_id, player_id):
     if 'username' not in login_session:
         return redirect('/login')
     editedPlayer = session.query(
-    Player).filter_by(team_id=team_id, id=player_id).one()
+        Player).filter_by(team_id=team_id, id=player_id).one()
     if request.method == 'POST':
         if request.form['firstName']:
-            editedPlayer.firstName=request.form['firstName']
-            editedPlayer.lastName=request.form['lastName']
-            editedPlayer.position=request.form['position']
-            editedPlayer.height=request.form['height']
-            editedPlayer.weight=request.form['weight']
-            editedPlayer.birthdate=request.form['birthdate']
-            editedPlayer.birthCity=request.form['birthCity']
-            editedPlayer.birthLocation=request.form['birthLocation']
-            editedPlayer.birthNation=request.form['birthNation']
-            editedPlayer.bio=request.form['bio']
+            editedPlayer.firstName = request.form['firstName']
+            editedPlayer.lastName = request.form['lastName']
+            editedPlayer.position = request.form['position']
+            editedPlayer.height = request.form['height']
+            editedPlayer.weight = request.form['weight']
+            editedPlayer.birthdate = request.form['birthdate']
+            editedPlayer.birthCity = request.form['birthCity']
+            editedPlayer.birthLocation = request.form['birthLocation']
+            editedPlayer.birthNation = request.form['birthNation']
+            editedPlayer.bio = request.form['bio']
         session.add(editedPlayer)
         session.commit()
         flash("Player Edited!")
-        return redirect(url_for('playerPage', team_id = team_id, player_id=editedPlayer.id))
+        return redirect(url_for(
+            'playerPage', team_id=team_id, player_id=editedPlayer.id))
     else:
-        return render_template('editPlayer.html', i=editedPlayer, team_id=team_id)
+        return render_template(
+            'editPlayer.html', i=editedPlayer, team_id=team_id)
 
 
-## DELETE --------------------------------------------
-#Delete Team page
+# DELETE --------------------------------------------
+# Delete Team page
 @app.route('/<int:team_id>/delete/', methods=['GET', 'POST'])
 def deleteTeamPage(team_id):
     if 'username' not in login_session:
         return redirect('/login')
     teamToDelete = session.query(
-    Team).filter_by(id=team_id).one()
+        Team).filter_by(id=team_id).one()
     if request.method == 'POST':
         session.delete(teamToDelete)
         session.commit()
@@ -327,13 +339,14 @@ def deleteTeamPage(team_id):
     else:
         return render_template('deleteTeam.html', i=teamToDelete)
 
-#Delete Player page
+
+# Delete Player page
 @app.route('/<int:team_id>/<int:player_id>/delete/', methods=['GET', 'POST'])
 def deletePlayerPage(team_id, player_id):
     if 'username' not in login_session:
         return redirect('/login')
     playerToDelete = session.query(
-    Player).filter_by(team_id=team_id, id=player_id).one()
+        Player).filter_by(team_id=team_id, id=player_id).one()
     if request.method == 'POST':
         session.delete(playerToDelete)
         session.commit()
