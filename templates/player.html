@@ -1,8 +1,5 @@
-<html>
-  <head>
-    <link rel=stylesheet type=text/css href="{{url_for('static', filename='styles.css')}}">
-  </head>
-  <body>
+{% extends "main.html" %}
+{% block content %}
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <ul>
@@ -30,5 +27,4 @@
     <a href='{{url_for('teamPage',
       team_id=team.id)}}'>Back to {{ team.name }} roster</a><br>
     <a href='{{url_for('mainPage')}}'>Back to Teams</a>
-  </body>
-</html>
+{% endblock %}

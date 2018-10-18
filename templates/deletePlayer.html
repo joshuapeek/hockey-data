@@ -1,13 +1,9 @@
-<html>
-  <head>
-    <link rel=stylesheet type=text/css href="{{url_for('static', filename='styles.css')}}">
-  </head>
-  <body>
+{% extends "main.html" %}
+{% block content %}
     <h2>Are you sure you want to delete {{i.firstName}} {{i.lastName}}?</h2>
     <form action='#' method='post'<
       <p><input type='submit' id='submit' value='Delete'></p></br>
     </form>
     </br>
     <a href='..'>Cancel / Back to Player Bio</a><br>
-  </body>
-</html>
+{% endblock %}
