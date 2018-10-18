@@ -1,5 +1,5 @@
 body {
-    font-family: sans-serif;
+    font-family: 'Cabin', sans-serif;
     color: #E4E5E6;
     background-color: #231F20
 }
@@ -8,12 +8,13 @@ h1,
 h2,
 h3,
 h4 {
+    font-family: 'Cabin', sans-serif;
     color: #F79239;
 }
 
 h1,
 h2 {
-    font-family: 'georgia', serif;
+    font-family: 'Cabin', sans-serif;
     margin: 0;
 }
 
