@@ -9,14 +9,16 @@
         </ul>
       {% endif %}
     {% endwith %}
-    <h1>{{ team.city }} {{ team.name }}</h1>
-    <h3>Roster:</h3>
+    <h2>{{ team.city }} {{ team.name }}</h2>
+    </br>
+    <p class="player-table-title">Roster:</p>
     {% for i in players %}
-    <b>Name:</b> {{ i.firstName }} {{ i.lastName }}<br>
-    <b>Position:</b> {{ i.position }}<br>
-    <a href='{{url_for('playerPage',
-    team_id = team.id, player_id=i.id)}}'>View Bio</a>
-  </br></br>
+    <div class="index-plates">
+      <b>Name:</b> {{ i.firstName }} {{ i.lastName }}<br>
+      <b>Position:</b> {{ i.position }}<br>
+      <a href='{{url_for('playerPage',
+      team_id = team.id, player_id=i.id)}}'>View Bio</a></br>
+    </div>
     {% endfor %}
   <br>
   <a href='{{url_for('mainPage')}}'>Back to Teams</a>

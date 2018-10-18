@@ -9,12 +9,13 @@
         </ul>
       {% endif %}
     {% endwith %}
-    <h1>Teams</h1>
+    <h2>Teams</h2>
     {% for i in teams %}
-      {{ i.city }} {{ i.name }}</br>
-      • <a href="{{url_for('teamPage', team_id=i.id)}}">View Roster</a></br>
-      • <a href="{{url_for('editTeamPage', team_id=i.id)}}">Edit Team</a></br>
-    </br></br>
+      <div class="index-plates">
+        {{ i.city }} {{ i.name }}</br>
+        • <a href="{{url_for('teamPage', team_id=i.id)}}">View Roster</a></br>
+        • <a href="{{url_for('editTeamPage', team_id=i.id)}}">Edit Team</a></br>
+      </div>
     {% endfor %}
 
   </br>

@@ -1,7 +1,10 @@
 body {
     font-family: 'Cabin', sans-serif;
     color: #E4E5E6;
-    background-color: #231F20
+    /* background-color: #E4E5E6; */
+    background-image: url("https://images.pexels.com/photos/294632/pexels-photo-294632.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260");
+    background-repeat: no-repeat;
+    background-size: 100% 1100px;
 }
 
 h1,
@@ -12,7 +15,9 @@ h4 {
     color: #F79239;
 }
 
-h1,
+h1 {
+
+}
 h2 {
     font-family: 'Cabin', sans-serif;
     margin: 0;
@@ -46,7 +51,7 @@ a {
     padding: 5px;
     margin: 5px;
     border-color: #999999;
-    background-color: #333333
+    background-color: #333333;
 }
 
 .header {
@@ -72,4 +77,90 @@ a {
 
 .flash {
     background: #cee5f5;
+}
+.container {
+  padding: 0px;
+}
+.authentication-row {
+  color: #ffffff;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.flex-container {
+  margin: 0px;
+}
+.flex-container .top-menu {
+  margin: inherit;
+  width: 50%;
+  margin-top: 5px;
+  padding-top: 10px;
+	padding-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  color: #4C7999;
+  background: #C6E7FF;
+  line-height: 60px;
+  vertical-align: middle;
+}
+#top-menu {
+  line-height: 60px;
+  vertical-align: middle;
+}
+img.top-menu {
+  float:right;
+}
+a.top-menu-link {
+  color: #4C7999;
+  font-size: 1em;
+  line-height: 60px;
+  vertical-align: middle;
+}
+.flex-container .top-right {
+  margin: inherit;
+  width: 50%;
+  margin-top: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  color: #4C7999;
+  background: #C6E7FF;
+  line-height: 60px;
+  vertical-align: middle;
+}
+#top-right {
+  line-height: 60px;
+  vertical-align: middle;
+}
+img.top-right {
+  float:right;
+}
+a.top-right-link {
+  color: #4C7999;
+  font-size: 1em;
+  line-height: 60px;
+  vertical-align: middle;
+}
+.content {
+  width: inherit;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  background: #231F20;
+  margin-bottom: 30px;
+}
+.index-plates {
+  width: 50%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 30px;
+  border-bottom-width: 3px;
+  border-bottom-color: #333;
+  border-bottom-style: solid;
+}
+.player-table-title {
+  color: #4C7999;
+  font-size: 1.1em;
 }
