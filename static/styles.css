@@ -85,8 +85,12 @@ a {
   color: #ffffff;
   margin-top: 15px;
   width: 100%;
+  vertical-align: middle;
 }
-
+.signinButton, ::after, ::before {
+	box-sizing: border-box;
+	vertical-align: middle;
+}
 .flex-container {
   margin: 0px;
 }
@@ -115,6 +119,9 @@ a.top-menu-link {
   font-size: 1em;
   line-height: 60px;
   vertical-align: middle;
+}
+a.disconnect {
+  font-size: 1em;
 }
 .flex-container .top-right {
   margin: inherit;

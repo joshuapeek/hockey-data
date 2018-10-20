@@ -1,11 +1,9 @@
 {% extends "main.html" %}
 {% block content %}
 </br>
-<p>This function requires Sign-In.
+<p>Create, Edit and Delete functions require Sign-In.
 Please authenticate using the button below.</p>
-</br>
-
-<!-- GOOGLE PLUS SIGN IN BUTTON & PROCESS -->
+<!-- GOOGLE PLUS SIGN IN BUTTON -->
           <div id="signinButton">
           <span class="g-signin"
             data-scope="openid email"
@@ -18,7 +16,10 @@ Please authenticate using the button below.</p>
           </span>
         </div>
 
+<p>To Sign Out, <a href="/gdisconnect" class="disconnect">Click Here</a>.</p>
+<p></br></p>
+<a href='{{url_for('mainPage')}}'>Back to Teams</a>
 <div id="result"></div>
-<!--END GOOGLE PLUS SIGN IN BUTTON & PROCESS -->
+<!--END GOOGLE PLUS SIGN IN BUTTON -->
 
 {% endblock %}
