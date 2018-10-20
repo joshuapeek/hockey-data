@@ -155,6 +155,8 @@ def gconnect():
 
     stored_access_token = login_session.get('access_token')
     stored_gplus_id = login_session.get('gplus_id')
+
+    # Check if user is already signed in
     if stored_access_token is not None and gplus_id == stored_gplus_id:
         response = make_response(json.dumps(
             'Current user is already connected.'), 200)
@@ -177,17 +179,21 @@ def gconnect():
     login_session['email'] = data['email']
 
     # Confirmation message on temporary page, then redirect
-    output = ''
-    output += '<h1>Welcome, '
-    output += login_session['username']
-    output += '!</h1>'
-    output += '<img src="'
-    output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;'
-    output += '-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
-    flash("you are now logged in as %s" % login_session['username'])
-    print "done!"
-    return output
+    # output = ''
+    # output += '<h1>Welcome, '
+    # output += login_session['username']
+    # output += '!</h1>'
+    # output += '<img src="'
+    # output += login_session['picture']
+    # output += ' " style = "width: 300px; height: 300px;border-radius: 150px;'
+    # output += '-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    # flash("you are now logged in as %s" % login_session['username'])
+    # print "done!"
+    # return output
+    response = make_response(json.dumps(
+        'Signed in Successfully!'), 200)
+    response.headers['Content-Type'] = 'application/json'
+    return response
 
 
 # Admin Sign-out: Revokes current user's token, resets login_session
