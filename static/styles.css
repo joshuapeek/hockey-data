@@ -160,6 +160,16 @@ a.top-right-link {
   border-bottom-color: #333;
   border-bottom-style: solid;
 }
+
+ul.index-plates {
+  display: -ms-flexbox;           /* IE 10 */
+  display: -webkit-flex;          /* Safari 6.1+. iOS 7.1+ */
+  display: flex;
+  -webkit-flex-flow: wrap column; /* Safari 6.1+ */
+  flex-flow: wrap column;
+  max-height: 150px;              /* Limit height to whatever you need */
+}
+
 .player-table-title {
   color: #4C7999;
   font-size: 1.1em;

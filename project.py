@@ -14,6 +14,7 @@ import json
 from flask import make_response
 import requests
 
+# Read client secrets, set as variables for use in authentication
 CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 CLIENT_SECRET = json.loads(
@@ -23,6 +24,7 @@ redirect_uris = json.loads(
 
 app = Flask(__name__)
 
+# set shorthand variable for connecting to database
 engine = create_engine('sqlite:///hockey.db',
                        connect_args={'check_same_thread': False},
                        poolclass=StaticPool)
@@ -30,6 +32,7 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
 
 # STANDARD USE //////////////////////////////////////
 # These pages are served for standard users
@@ -60,7 +63,7 @@ def playerPage(team_id, player_id):
 
 
 # API USE //////////////////////////////////////
-# These pages are served via API request
+# These pages are served via API request at JSON endpoint
 
 
 # JSON Main page: displays teams in db, serialized
@@ -88,12 +91,13 @@ def playerPageJSON(team_id, player_id):
 
 
 # AUTHENTICATION //////////////////////////////////////
-# These pages allow admin users to authenticate
+# These pages allow admin users to authenticate and disconnect
 
 
 # Admin Login page
 @app.route('/login/')
 def adminLogin():
+    # Create CSRF state token
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in xrange(32))
     login_session['state'] = state
@@ -102,7 +106,7 @@ def adminLogin():
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
-    # Validate state token
+    # Validate CSRF state token
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter.'), 401)
         response.headers['Content-Type'] = 'application/json'
@@ -165,13 +169,14 @@ def gconnect():
     userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo"
     params = {'access_token': credentials.access_token, 'alt': 'json'}
     answer = requests.get(userinfo_url, params=params)
-
     data = answer.json()
 
+    # Store to variable
     login_session['username'] = data['email']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
+    # Confirmation message on temporary page, then redirect
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
@@ -207,18 +212,13 @@ def gdisconnect():
         del login_session['username']
         del login_session['email']
         del login_session['picture']
-        # response = make_response(
-        #    json.dumps('Successfully disconnected.'), 200)
-        # response.headers['Content-Type'] = 'application/json'
-        # return response
+        # Move user back to main page, flash success message
         flash("Disconnected Successfully")
         return redirect('/')
     else:
-        # The token was invalid for some reason
-        response = make_response(
-            json.dumps('Failed to revoke token for given user.'), 400)
-        response.headers['Content-Type'] = 'application/json'
-        return response
+        # Move user back to main page, flash failure message
+        flash("Failed to log out")
+        return redirect('/')
 
 
 # ADMIN USE //////////////////////////////////////
@@ -235,8 +235,10 @@ def adminPage():
 # New Team page
 @app.route('/new/', methods=['GET', 'POST'])
 def newTeamPage():
+    # Ensure user is signed in
     if 'username' not in login_session:
         return redirect('/login')
+    # If GET, serve form; If POST receive data, commit new team to db
     if request.method == 'POST':
         newTeam = Team(
                        city=request.form['city'],
@@ -254,8 +256,10 @@ def newTeamPage():
 # New Player page
 @app.route('/<int:team_id>/new/', methods=['GET', 'POST'])
 def newPlayerPage(team_id):
+    # Ensure user is signed in
     if 'username' not in login_session:
         return redirect('/login')
+    # If GET, serve form; If POST receive data, commit new player to db
     if request.method == 'POST':
         newPlayer = Player(firstName=request.form['firstName'],
                            lastName=request.form['lastName'],
@@ -280,9 +284,12 @@ def newPlayerPage(team_id):
 # Edit Team page
 @app.route('/<int:team_id>/edit/', methods=['GET', 'POST'])
 def editTeamPage(team_id):
+    # Ensure user is signed in
     if 'username' not in login_session:
         return redirect('/login')
+    # Pull team specified in URI from db
     editedTeam = session.query(Team).filter_by(id=team_id).one()
+    # If GET, serve form; If POST receive data, commit edited team to db
     if request.method == 'POST':
         if request.form['city']:
             editedTeam.city = request.form['city']
@@ -300,10 +307,13 @@ def editTeamPage(team_id):
 # Edit Player page
 @app.route('/<int:team_id>/<int:player_id>/edit/', methods=['GET', 'POST'])
 def editPlayerPage(team_id, player_id):
+    # Ensure user is signed in
     if 'username' not in login_session:
         return redirect('/login')
+    # Pull player specified in URI from db
     editedPlayer = session.query(
         Player).filter_by(team_id=team_id, id=player_id).one()
+    # If GET, serve form; If POST receive data, commit edited player to db
     if request.method == 'POST':
         if request.form['firstName']:
             editedPlayer.firstName = request.form['firstName']
@@ -330,10 +340,13 @@ def editPlayerPage(team_id, player_id):
 # Delete Team page
 @app.route('/<int:team_id>/delete/', methods=['GET', 'POST'])
 def deleteTeamPage(team_id):
+    # Ensure user is signed in
     if 'username' not in login_session:
         return redirect('/login')
+    # Pull team specified in URI from db
     teamToDelete = session.query(
         Team).filter_by(id=team_id).one()
+    # If GET, serve form; If POST remove team from db
     if request.method == 'POST':
         session.delete(teamToDelete)
         session.commit()
@@ -346,10 +359,13 @@ def deleteTeamPage(team_id):
 # Delete Player page
 @app.route('/<int:team_id>/<int:player_id>/delete/', methods=['GET', 'POST'])
 def deletePlayerPage(team_id, player_id):
+    # Ensure user is signed in
     if 'username' not in login_session:
         return redirect('/login')
+    # Pull player specified in URI from db
     playerToDelete = session.query(
         Player).filter_by(team_id=team_id, id=player_id).one()
+    # If GET, serve form; If POST remove player from db
     if request.method == 'POST':
         session.delete(playerToDelete)
         session.commit()

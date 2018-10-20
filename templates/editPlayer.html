@@ -1,9 +1,5 @@
-<html>
-<head>
-  <link rel=stylesheet type=text/css href="{{url_for('static', filename='styles.css')}}">
-</head>
-
-  <body>
+{% extends "main.html" %}
+{% block content %}
     <h1>Edit {{i.firstName}} {{i.lastName}}</h1>
     <form action='{{url_for('editPlayerPage',
     team_id=team_id, player_id=i.id)}}'
@@ -31,5 +27,4 @@
       <p><input type='submit' value='Edit'></p>
     </form>
     <a href='..'>Cancel / Back to Player Bio</a><br>
-  </body>
-</html>
+{% endblock %}}
