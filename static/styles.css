@@ -2,9 +2,13 @@ body {
     font-family: 'Cabin', sans-serif;
     color: #E4E5E6;
     /* background-color: #E4E5E6; */
+    /*
     background-image: url("https://images.pexels.com/photos/294632/pexels-photo-294632.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260");
     background-repeat: no-repeat;
     background-size: 100% 1100px;
+    */
+    background-image: url("https://raw.githubusercontent.com/joshuapeek/hockey-data/master/images/nhl95_1.png");
+    background-repeat: repeat;
 }
 
 h1,

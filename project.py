@@ -57,6 +57,7 @@ def teamPage(team_id):
 @app.route('/<int:team_id>/<int:player_id>/')
 def playerPage(team_id, player_id):
     team = session.query(Team).filter_by(id=team_id).one()
+    players = session.query(Player).filter_by(team_id=team_id).all()
     player = session.query(Player).filter_by(
         team_id=team_id, id=player_id).one()
     return render_template('player.html', team=team, player=player)
