@@ -311,15 +311,18 @@ These endpoints will return the same data as their standard counterparts, except
 The JSON endpoints can be accessed by simply adding `/JSON` to the end of any "Teams", "Roster", or "Player Bio" page.
 
 #### Examples of JSON URL Structure and Return Data
+###### Teams Page
 "Teams" page accessed in JSON format: `http://localhost:5000/JSON`
 - Returns a list of teams in the database
 - Returned data for each team includes: city, conference, division, id, name
 
+###### Roster Page
 Add in any team's `id` value after the main URI (but before `/JSON`) to access the "Roster"
 Example "Roster" page URI, accessed in JSON format: `http://localhost:5000/8/JSON`
 - Returns a list of players in the database for team id specified
 - Returned data for each player includes: bio, birthCity, birthLocation, birthNation, birthdate, firstName, height, id, lastName, position, team_id, weight
 
+###### Player Bio Page
 Add in any player's `id` value after their team's `id` (but before `/JSON`) to access the "Player Bio"
 Example "Player Bio" page URI, accessed in JSON format: `http://localhost:5000/8/1/JSON`
 - Returns stored data for player specified, on team specified
