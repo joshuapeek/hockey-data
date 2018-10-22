@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect
 from flask import url_for, flash, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Team, Player
+from database_setup import Base, Team, Player, User
 from sqlalchemy.pool import StaticPool
 from flask import session as login_session
 import random
@@ -37,13 +37,25 @@ session = DBSession()
 # STANDARD USE //////////////////////////////////////
 # These pages are served for standard users
 
+# Temporary page for testing, displays data in user table
+@app.route('/users')
+def users():
+    users = session.query(User).all()
+    output = 'user table dump<br><br>'
+    for i in users:
+        output += 'user id: ' + str(i.id) + '<br>'
+        output += 'username: ' + i.username + '<br>'
+        output += 'email: ' + i.email + '<br>'
+        output += 'profile picture url: ' + i.picture + '<br><br>'
+    return output
+
+
 
 # Main page - displays teams in db
 @app.route('/')
 def mainPage():
     teams = session.query(Team).all()
     return render_template('teams.html', teams=teams)
-
 
 # Team page - displays players in db, from a given team
 @app.route('/<int:team_id>/')
@@ -178,11 +190,15 @@ def gconnect():
     login_session['username'] = data['email']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
+    # Check if user exists in user table, create entry if no
+    user_id = getUserID(login_session['email'])
+    if not user_id:
+	    createUser(login_session)
+    login_session['user_id'] = user_id
     response = make_response(json.dumps(
-        'Signed in Successfully!'), 200)
+     'Signed in Successfully!'), 200)
     response.headers['Content-Type'] = 'application/json'
     return response
-
 
 # Admin Sign-out: Revokes current user's token, resets login_session
 @app.route('/gdisconnect')
@@ -214,6 +230,31 @@ def gdisconnect():
         flash("Failed to log out")
         return redirect('/')
 
+# Create user record in users table
+def createUser(login_session):
+    newUser = User(username=login_session['username'],
+                   email=login_session['email'],
+                   picture=login_session['picture'],)
+    session.add(newUser)
+    session.commit()
+    user = session.query(User).filter_by(email=login_session['email']).one()
+    return user.id
+
+
+# Get user id from email
+def getUserID(email):
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        return user.id
+    except:
+        return None
+
+# Get user object from user_id
+def getUserInfo(user_id):
+    user = session.query(User).filter_by(id=user_id).one()
+    return user
+
+
 
 # ADMIN USE //////////////////////////////////////
 # These pages are served for admin users
@@ -238,7 +279,8 @@ def newTeamPage():
                        city=request.form['city'],
                        name=request.form['name'],
                        conference=request.form['conference'],
-                       division=request.form['division'],)
+                       division=request.form['division'],
+                       user_id=login_session['user_id'])
         session.add(newTeam)
         session.commit()
         flash("New Team Created!")
@@ -265,6 +307,7 @@ def newPlayerPage(team_id):
                            birthLocation=request.form['birthLocation'],
                            birthNation=request.form['birthNation'],
                            bio=request.form['bio'],
+                           user_id=login_session['user_id'],
                            team_id=team_id)
         session.add(newPlayer)
         session.commit()

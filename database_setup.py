@@ -5,6 +5,22 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
+class User(Base):
+    __tablename__ = 'user'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+    picture = Column(String(250))
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'picture': self.picture,
+        }
 
 class Team(Base):
     __tablename__ = 'team'
@@ -14,6 +30,8 @@ class Team(Base):
     name = Column(String(100), nullable=False)
     conference = Column(String(7), nullable=False)
     division = Column(String(12), nullable=False)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
     @property
     def serialize(self):
@@ -23,7 +41,8 @@ class Team(Base):
             'city': self.city,
             'name': self.name,
             'conference': self.conference,
-            'division': self.division
+            'division': self.division,
+            'user_id': self.user_id
         }
 
 
@@ -42,6 +61,8 @@ class Player(Base):
     birthLocation = Column(String(50))
     birthNation = Column(String(50))
     bio = Column(String(2500))
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
     @property
     def serialize(self):
@@ -58,7 +79,8 @@ class Player(Base):
             'birthCity': self.birthCity,
             'birthLocation': self.birthLocation,
             'birthNation': self.birthNation,
-            'bio': self.bio
+            'bio': self.bio,
+            'user_id': self.user_id
         }
 
 engine = create_engine('sqlite:///hockey.db')

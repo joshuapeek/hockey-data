@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from database_setup import Team, Base, Player
+from database_setup import Team, Base, Player, User
 
 engine = create_engine('sqlite:///hockey.db')
 # Bind the engine to the metadata of the Base class so that the
@@ -23,13 +23,15 @@ session = DBSession()
 toronto = Team(city="Toronto",
                name="Maple Leafs",
                conference="Eastern",
-               division="Atlantic")
+               division="Atlantic",
+               user_id="1")
 session.add(toronto)
 session.commit()
 
 montreal = Team(city="Montreal",
                 name="Canadiens",
                 conference="Eastern",
+                user_id="500",
                 division="Atlantic")
 session.add(montreal)
 session.commit()
@@ -74,6 +76,19 @@ detroit = Team(city="Detroit",
                conference="Eastern",
                division="Atlantic")
 session.add(detroit)
+session.commit()
+
+
+user1 = User(username="Test",
+             email="nope@nope.com",
+             picture="picture")
+session.add(user1)
+session.commit()
+
+user2 = User(username="Tester",
+             email="nope2@nope.com",
+             picture="picture")
+session.add(user2)
 session.commit()
 
 
