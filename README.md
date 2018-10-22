@@ -95,14 +95,20 @@ You'll also need to install the following libraries for use with Python. For eac
 
 #### hockey-database itself
 
-PostgreSQL is already installed on your VM, as part of the VM Configuration, detailed above.
-To use the 'news' database, you'll need to have the provided PostgreSQL database 'news' installed.
-1. [Download the 'news' database here.](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip)
-2. Unzip the file, and locate the contained file called `newsdata.sql`
-3. Place this `newsdata.sql` file into the `vagrant` directory.
-4. Before loading the data, be sure your VM is on the `vagrant` directory. If not, `cd` into it.
-5. Load the data by using the command `psql -d news -f newsdata.sql`
-   - This command connects to a 'news' database, and runs a series of SQL statements, setting up the 'news' database for use.
+This instruction will walk through installing using git and github.
+
+First, if you haven't already, download and install git. It's the easiest way to install this project locally.
+- [An installation guide can be found here.](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [Download links are found here. Select your OS's flavor.](https://git-scm.com/download)
+
+Next, Fork the hockey-database repo from github
+1. While signed into github, simply fork the hockey-database repo, creating your own version to use
+2. Visit your forked version of the repo on github. Under the repository name, click Clone or download.
+3. In the Clone with HTTPs section, click the icon to copy the clone URL for the repository.
+4. Open Git Bash
+5. Change the current working directory to your virtual machine's vagrant folder
+6. Type `git clone ` and then paste the URL you copied in step 3 above. It should look something like: `git clone https://github.com/YOUR-USERNAME-HERE/YOUR-REPOSITORY-HERE`
+7. Press Enter. Your local clone will be created.
 
 
 ###### Launching hockey-database
@@ -238,8 +244,8 @@ Project.py consists of five main sections:
 
 
 #### createTeams.py file
-- This optional file will pre-populate your database with some teams and players, which an authenticated user may then further edit.
-- If desired, you may run this file via terminal to pre-populate your database with teams and players.
+- This file can be used to populate the database with some teams and players, which an authenticated user may then further edit.
+- If desired, you may run this file via terminal to pre-populate your database with teams and players, though they should already be populated in the hockey.db file
 1. To run this file, first ensure that the `project.py` file is not currently running.
 2. Enter the following within the VM terminal: `python createTeams.py`
 3. You should see this message in the terminal: `Added Teams and Players!`
