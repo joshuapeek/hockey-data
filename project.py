@@ -74,7 +74,9 @@ def playerPage(team_id, player_id):
     players = session.query(Player).filter_by(team_id=team_id).all()
     player = session.query(Player).filter_by(
         team_id=team_id, id=player_id).one()
-    return render_template('player.html', team=team, player=player)
+    creator = getUserInfo(player.user_id)
+    return render_template('player.html', team=team, player=player,
+        creator=creator)
 
 
 # API USE //////////////////////////////////////

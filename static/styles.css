@@ -76,6 +76,7 @@ a {
 .editdeletepane {}
 .creator {
   color: #4C7999;
+  font-size: .75em;
 }
 .flash {
     background: #cee5f5;
