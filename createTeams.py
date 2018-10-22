@@ -31,71 +31,71 @@ session.commit()
 montreal = Team(city="Montreal",
                 name="Canadiens",
                 conference="Eastern",
-                user_id="500",
-                division="Atlantic")
+                division="Atlantic",
+                user_id="1")
 session.add(montreal)
 session.commit()
 
 ottawa = Team(city="Ottawa",
               name="Senators",
               conference="Eastern",
-              division="Atlantic")
+              division="Atlantic",
+              user_id="1")
 session.add(ottawa)
 session.commit()
 
 tampaBay = Team(city="Tampa Bay",
                 name="Lightning",
                 conference="Eastern",
-                division="Atlantic")
+                division="Atlantic",
+                user_id="1")
 session.add(tampaBay)
 session.commit()
 
 buffalo = Team(city="Buffalo",
                name="Sabres",
                conference="Eastern",
-               division="Atlantic")
+               division="Atlantic",
+               user_id="1")
 session.add(buffalo)
 session.commit()
 
 boston = Team(city="Boston",
               name="Bruins",
               conference="Eastern",
-              division="Atlantic")
+              division="Atlantic",
+              user_id="1")
 session.add(boston)
 session.commit()
 
 florida = Team(city="Florida",
                name="Panthers",
                conference="Eastern",
-               division="Atlantic")
+               division="Atlantic",
+               user_id="1")
 session.add(florida)
 session.commit()
 
 detroit = Team(city="Detroit",
                name="Red Wings",
                conference="Eastern",
-               division="Atlantic")
+               division="Atlantic",
+               user_id="1")
 session.add(detroit)
 session.commit()
 
 
-user1 = User(username="Test",
+user1 = User(username="Unknown",
              email="nope@nope.com",
              picture="picture")
 session.add(user1)
-session.commit()
-
-user2 = User(username="Tester",
-             email="nope2@nope.com",
-             picture="picture")
-session.add(user2)
 session.commit()
 
 
 player1 = Player(firstName="Dylan", lastName="Larkin", position="C",
                  team=detroit, height="""6' 1" """, weight="198 lb",
                  birthdate="July 30, 1996", birthCity="Waterford",
-                 birthLocation="Michigan", birthNation="USA",
+                 birthLocation="Michigan", birthNation="USA", user_id="1",
                  bio=""" The moment was duly noted and set down for
                  posterity by all those
     who hold the Detroit Red Wings near and dear to their heart.
@@ -134,7 +134,7 @@ session.commit()
 player2 = Player(firstName="Auston", lastName="Matthews", position="C",
                  team=toronto, height="""6' 3" """, weight="220 lb",
                  birthdate="September 17, 1997", birthCity="San Ramon",
-                 birthLocation="California", birthNation="USA",
+                 birthLocation="California", birthNation="USA", user_id="1",
                  bio=""""Matthews is the NHL's Sun Belt growth come to
                  spectacular life.
     Who would have thought a decade or so ago that a player raised in
@@ -180,7 +180,7 @@ session.add(player2)
 session.commit()
 
 
-player3 = Player(firstName="Mark", lastName="Pysyk", position="D",
+player3 = Player(firstName="Mark", lastName="Pysyk", position="D", user_id="1",
                  team=florida, height="""6' 1" """, weight="200 lb",
                  birthdate="January 11, 1992", birthCity="Sherwood Park",
                  birthLocation="AB", birthNation="CAN", bio="""Pysyk doesn't
@@ -196,7 +196,7 @@ session.commit()
 
 player4 = Player(firstName="Tomas", lastName="Tatar", position="LW",
                  team=montreal, height="""5' 10" """, weight="185 lb",
-                 birthdate="December 1, 1990", birthCity="Ilava",
+                 birthdate="December 1, 1990", birthCity="Ilava", user_id="1",
                  birthLocation="", birthNation="SVK", bio="""Tatar appeared on
     track for a fourth straight 20-goal season with the Detroit Red Wings
     in 2017-18 when he was traded to the Vegas Golden Knights for three
@@ -209,7 +209,7 @@ session.commit()
 
 
 player5 = Player(firstName="Thomas", lastName="Chabot", position="D",
-                 team=ottawa, height="""6' 2" """, weight="196 lb",
+                 team=ottawa, height="""6' 2" """, weight="196 lb", user_id="1",
                  birthdate="January 30, 1997", birthCity="Sainte-Marie",
                  birthLocation="QC", birthNation="CAN", bio="""Chabot, a
     defenseman taken by the Ottawa Senators in the first round (No. 18)
@@ -226,7 +226,7 @@ session.commit()
 
 player6 = Player(firstName="Nikita", lastName="Kucherov", position="RW",
                  team=tampaBay, height="""5' 11" """, weight="178 lb",
-                 birthdate="June 17, 1993", birthCity="Maykop",
+                 birthdate="June 17, 1993", birthCity="Maykop", user_id="1",
                  birthLocation="", birthNation="RUS", bio="""Kucherov was a
     second-round pick (No. 58) by the Tampa Bay Lightning in the 2011
     NHL Draft, but he has played like a first-round talentselfself.
@@ -238,7 +238,7 @@ session.add(player6)
 session.commit()
 
 
-player7 = Player(firstName="Jack", lastName="Eichel", position="C",
+player7 = Player(firstName="Jack", lastName="Eichel", position="C", user_id="1",
                  team=buffalo, height="""6' 2" """, weight="200 lb",
                  birthdate="October 28, 1996", birthCity="North Chelmsford",
                  birthLocation="MA", birthNation="USA", bio="""The No. 2
@@ -255,7 +255,7 @@ session.commit()
 
 player8 = Player(firstName="David", lastName="Pastrnak", position="RW",
                  team=boston, height="""6' 0" """, weight="188 lb",
-                 birthdate="May 25, 1996", birthCity="Havirov",
+                 birthdate="May 25, 1996", birthCity="Havirov", user_id="1",
                  birthLocation="", birthNation="CZE", bio="""When Pastrnak
                  walked
     on stage at the Wells Fargo Center in Philadelphia as the No. 25
@@ -273,7 +273,7 @@ session.commit()
 # Secondary Players /////////////
 player9 = Player(firstName="Secondary", lastName="Player", position="G",
                  team=toronto, height="""5' 10" """, weight="175 lb",
-                 birthdate="July 16, 1986", birthCity="Lansing",
+                 birthdate="July 16, 1986", birthCity="Lansing", user_id="1",
                  birthLocation="Michigan", birthNation="USA",
                  bio="""Didn't start playing ice hockey until adulthood,
     and really... has no place in the NHL.""")
@@ -284,7 +284,7 @@ session.commit()
 
 player10 = Player(firstName="Secondary", lastName="Player", position="G",
                   team=montreal, height="""5' 10" """, weight="175 lb",
-                  birthdate="July 16, 1986", birthCity="Lansing",
+                  birthdate="July 16, 1986", birthCity="Lansing", user_id="1",
                   birthLocation="Michigan", birthNation="USA", bio="""Didn't
                   start
     playing ice hockey until adulthood, and really...
@@ -297,7 +297,7 @@ session.commit()
 player11 = Player(firstName="Secondary", lastName="Player", position="G",
                   team=ottawa, height="""5' 10" """, weight="175 lb",
                   birthdate="July 16, 1986", birthCity="Lansing",
-                  birthLocation="Michigan", birthNation="USA",
+                  birthLocation="Michigan", birthNation="USA", user_id="1",
                   bio="""Didn't start playing ice hockey until adulthood,
     and really... has no place in the NHL.""")
 
@@ -308,8 +308,9 @@ session.commit()
 player12 = Player(firstName="Secondary", lastName="Player", position="G",
                   team=tampaBay, height="""5' 10" """, weight="175 lb",
                   birthdate="July 16, 1986", birthCity="Lansing",
-                  birthLocation="Michigan", birthNation="USA",
-                  bio="""Didn't start playing ice hockey until adulthood, and really...
+                  birthLocation="Michigan", birthNation="USA", user_id="1",
+                  bio="""Didn't start playing ice hockey until adulthood,
+                  and really...
     has no place in the NHL.""")
 
 session.add(player12)
@@ -319,7 +320,7 @@ session.commit()
 player13 = Player(firstName="Secondary", lastName="Player", position="G",
                   team=buffalo, height="""5' 10" """, weight="175 lb",
                   birthdate="July 16, 1986", birthCity="Lansing",
-                  birthLocation="Michigan", birthNation="USA",
+                  birthLocation="Michigan", birthNation="USA", user_id="1",
                   bio="""Didn't start playing ice hockey until adulthood,
                   and really...
     has no place in the NHL.""")
@@ -331,7 +332,7 @@ session.commit()
 player14 = Player(firstName="Secondary", lastName="Player", position="G",
                   team=boston, height="""5' 10" """, weight="175 lb",
                   birthdate="July 16, 1986", birthCity="Lansing",
-                  birthLocation="Michigan", birthNation="USA",
+                  birthLocation="Michigan", birthNation="USA", user_id="1",
                   bio="""Didn't start playing ice hockey until adulthood,
                   and really...
     has no place in the NHL.""")
@@ -343,7 +344,7 @@ session.commit()
 player15 = Player(firstName="Secondary", lastName="Player", position="G",
                   team=florida, height="""5' 10" """, weight="175 lb",
                   birthdate="July 16, 1986", birthCity="Lansing",
-                  birthLocation="Michigan", birthNation="USA",
+                  birthLocation="Michigan", birthNation="USA", user_id="1",
                   bio="""Didn't start playing ice hockey until adulthood, and
                   really... has no place in the NHL.""")
 
@@ -354,7 +355,7 @@ session.commit()
 player16 = Player(firstName="Secondary", lastName="Player", position="G",
                   team=detroit, height="""5' 10" """, weight="175 lb",
                   birthdate="July 16, 1986", birthCity="Lansing",
-                  birthLocation="Michigan", birthNation="USA",
+                  birthLocation="Michigan", birthNation="USA", user_id="1",
                   bio="""Didn't start playing ice hockey until adulthood, and
                   really... has no place in the NHL.""")
 

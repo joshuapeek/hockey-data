@@ -27,10 +27,6 @@ h2 {
     margin: 0;
 }
 
-h1 {
-    border-bottom: 2px solid #eee;
-}
-
 h2 {
     font-size: 1.2em;
 }
@@ -78,7 +74,9 @@ a {
 }
 
 .editdeletepane {}
-
+.creator {
+  color: #4C7999;
+}
 .flash {
     background: #cee5f5;
 }

@@ -62,7 +62,9 @@ def mainPage():
 def teamPage(team_id):
     team = session.query(Team).filter_by(id=team_id).one()
     players = session.query(Player).filter_by(team_id=team_id).all()
-    return render_template('roster.html', team=team, players=players)
+    creator = getUserInfo(team.user_id)
+    return render_template('roster.html',
+        team=team, players=players, creator=creator)
 
 
 # Player page - displays player info in db, for a given team, player

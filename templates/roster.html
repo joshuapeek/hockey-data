@@ -10,6 +10,7 @@
       {% endif %}
     {% endwith %}
     <h2>{{ team.city }} {{ team.name }}</h2>
+    <p class="creator">Created by: {{ creator.username }}</p>
     </br>
     <p class="player-table-title">Roster:</p>
     {% for i in players %}
