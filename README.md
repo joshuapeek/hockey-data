@@ -10,11 +10,17 @@ hockey-database was written by Joshua Peek.
 
 
 ## Index
-1. [Download and Installation](#download-and-installation)
-2. [Project Requirements](#project-requirements)
-3. ['news' Database Structure](#news-database-structure)
-4. [Code Design](#code-design)
-5. [Thanks & Acknowledgement](#thanks--acknowledgement)
+1. [Download and Installation: General](#download-and-installation)
+2. [Download and Installation: Virtual Machine Elements](#virtual-machine-elements)
+3. [Download and Installation: Python3 and Dependencies](#python3-and-dependencies)
+4. [Download and Installation: hockey-database files](#hockey-database-itself)
+5. [Project Requirements](#project-requirements)
+6. ['hockey-database' Table Structures](#hockey-database-table-structures)
+7. [Code Design](#code-design)
+8. [Code Design: project.py](#project-py-file)
+8. [Code Design: database_setup.py](#database-setup-py-file)
+8. [Code Design: createTeams.py](#createteams-py-file)
+8. [Thanks & Acknowledgement](#thanks--acknowledgement)
 
 
 
@@ -54,6 +60,7 @@ _Run `vagrant --version` in your terminal. A returned version number verifies co
 _A shell prompt beginning with `vagrant` signifies correct installation._
 _Remember to `cd` into the **vagrant** directory!_
 
+[Back to Index](#index)
 
 
 #### Python3 and Dependencies
@@ -81,9 +88,10 @@ You'll also need to install the following libraries for use with Python. For eac
 - [Documentation found here.](https://www.sqlalchemy.org/)
 
 ###### Requests
-- [For help installing Requests, visit this page.] (http://docs.python-requests.org/en/master/user/install/#install)
+- [For help installing Requests, visit this page.](http://docs.python-requests.org/en/master/user/install/#install)
 - [Documentation found here.](http://docs.python-requests.org/en/master/)
 
+[Back to Index](#index)
 
 #### hockey-database itself
 
@@ -132,28 +140,10 @@ The project must meet the following requirements:
 [Back to Index](#index)
 
 
-**Answer Formats**
-
-The expected answer format for each given question is seen below. _Note: These answers are not correct, they simply show format._
-1. What are the most popular three articles of all time?
-   - "Princess Shellfish Marries Prince Handsome" — 1201 views
-   - "Baltimore Ravens Defeat Rhode Island Shoggoths" — 915 views
-   - "Political Scandal Ends In Political Scandal" — 553 views
-2. Who are the most popular article authors of all time?
-   - Ursula La Multa — 2304 views
-   - Rudolf von Treppenwitz — 1985 views
-   - Markoff Chaney — 1723 views
-   - Anonymous Contributor — 1023 views
-3. On which days did more than 1% of requests lead to errors?
-   - July 29, 2016 — 2.5% errors
-
-[Back to Index](#index)
 
 
-
-
-## 'news' Database Structure
-The provided PostgreSQL database 'news' contains three tables, with the following structure:
+## 'hockey-database' Table Structures
+There are two tables in the project's database: "team" and "players". Their structures are described below.
 
 _team table:_
 
@@ -179,7 +169,7 @@ _players table:_
 |weight||text|
 |birthdate||text|
 |birthCity||text|
-|birthLocation|text|
+|birthLocation||text|
 |bio||text|
 
 [Back to Index](#index)
@@ -189,32 +179,69 @@ _players table:_
 
 ## Code Design
 
-This script is comprised of three functions:
-- `question_one`
-- `question_two`
-- `question_three`
+#### project.py file
+This project is largely controlled by the project.py file.
+Project.py consists of five main sections:
+1. [Variable Declarations](#variable-declarations)
+2. [Standard Use](#standard-use)
+3. [API/JSON Use](#api-json-use)
+4. [Authentication](#authentication)
+5. [Admin Use](#admin-use)
 
-Each function performs the same set of actions:
-1. Connect to the 'news' database.
-2. Leaning on psycopg2, create a cursor to execute the query.
-3. Define the query, assigning to a local variable.
-   - _This action is different between the functions, as the required answers vary._
-4. Leaning on psycopg2, execute the defined query.
-5. Print the text/title of the question.
-6. Iterate through the table elements returned by the query.
-7. Print elements using "New Style" String Formatting to match 'Answer Format' defined above.
-
-Calls to initiate the functions are nested within an `if` statement.
-This is to ensure the file is run directly, and not imported.
-Within the `if` statement:
-- Each function is called in order:
-  1. question_one
-  2. question_two
-  3. question_three
-- A blank line is then printed, providing visual separation from the next terminal line.
+###### Variable Declarations
+- Variables relating to oauth2 usage are defined here
+- A variable enabling shorter database query calls is defined
 
 
+
+###### Standard Use
+- Code defining URI for and pulling required data for the site's home page. Retrieved data is presented via Flask template.
+- Code defining URI for and pulling required data for a team-specific roster page. Retrieved data is presented via Flask template.
+- Code defining URI for and pulling required data for the team-and-player-specific bio page. Retrieved data is presented via Flask template.
+
+
+
+###### API/JSON Use
+- Code defining an endpoint URI for API usage, returning same data from "Teams" page in serialized JSON format.
+- Code defining an endpoint URI for API usage, returning same data from "Team Roster" page in serialized JSON format.
+- Code defining an endpoint URI for API usage, returning same data from "Player Bio" page in serialized JSON format.
+
+
+
+###### Authentication
+- Code defining URI for a login page, using Google 3rd party authentication
+- Code defining URI for a sign-out page
+
+
+
+###### Admin Use
+- Code defining a URI for "New Team" creation. Points user to a form, then collects form data and uses to create a new team in the database.
+- Code defining a URI for "New Player" creation. Points user to a form, then collects form data and uses to create a new player in the database.
+- Code defining a URI for "Edit Team" page. Points user to a form, then collects form data and uses to edit an existing team in the database.
+- Code defining a URI for "Edit Player" page. Points user to a form, then collects form data and uses to edit an existing player in the database.
+- Code defining a URI for "Delete Team" page. Points user to a form to confirm intent, then removes the team from the database.
+- Code defining a URI for "Delete Player" page. Points user to a form to confirm intent, then removes the player from the database.
+
+
+
+#### database_setup.py file
+- Two classes defined: 'team' and 'player'
+- Each class defines a table, and specifies fields for that table
+- For each class, a function is provided, allowing data to be retrieved in serialized format for API/JSON endpoints
+
+
+
+#### createTeams.py file
+- This optional file will pre-populate your database with some teams and players, which an authenticated user may then further edit.
+- If desired, you may run this file via terminal to pre-populate your database with teams and players.
+1. To run this file, first ensure that the `project.py` file is not currently running.
+2. Enter the following within the VM terminal: `python createTeams.py`
+3. You should see this message in the terminal: `Added Teams and Players!`
+
+[Back to Index](#index)
 
 
 ## Thanks & Acknowledgement
 Special thanks to the Udacity Mentors, who've helped tremendously.
+
+[Back to Index](#index)
