@@ -10,25 +10,25 @@ hockey-database was written by Joshua Peek.
 
 
 ## Index
-1. [Download and Installation: General](#download-and-installation)
-2. [Download and Installation: Virtual Machine Elements](#virtual-machine-elements)
-3. [Download and Installation: Python3 and Dependencies](#python3-and-dependencies)
-4. [Download and Installation: hockey-database files](#hockey-database-itself)
-5. [Project Requirements](#project-requirements)
-6. ['hockey-database' Table Structures](#hockey-database-table-structures)
-7. [Code Design](#code-design)
-8. [Code Design: project.py](#projectpy-file)
-8. [Code Design: database_setup.py](#database_setuppy-file)
-8. [Code Design: createTeams.py](#createteamspy-file)
-8. [Thanks & Acknowledgement](#thanks--acknowledgement)
+1. [Download and Installation](#download-and-installation)
+2. [Project Requirements](#project-requirements)
+3. ['hockey-database' Table Structures](#hockey-database-table-structures)
+4. [Code Design](#code-design)
+5. [Admin Usage](#admin-usage)
+6. [Thanks & Acknowledgement](#thanks--acknowledgement)
 
 
 
 
 ## Download and Installation
 Be sure to follow these items in order, starting at the top, and working downward.
-Ex: _Virtual Machine Elements_ first, and _The 'news' Database_ last.
+Ex: _Virtual Machine Elements_ first, and _hockey-database itself_ last.
 
+1. [Download and Installation: Virtual Machine Elements](#virtual-machine-elements)
+2. [Download and Installation: Python3 and Dependencies](#python3-and-dependencies)
+3. [Download and Installation: hockey-database files](#hockey-database-itself)
+
+[Back to Index](#index)
 
 #### Virtual Machine Elements
 
@@ -106,11 +106,12 @@ To use the 'news' database, you'll need to have the provided PostgreSQL database
 
 
 ###### Launching hockey-database
-To launch the script:
-1. Enter the following within the VM terminal: `python project.py`
-2. You should see a message letting you know that the server is now running.
-3. Next, open a browser and visit [http://localhost:5000/](http://localhost:5000/)
-4. You should see the main webpage appear, allowing you to view all teams.
+To launch the project:
+1. Be sure you've changed directory into the location of the `project.py` file
+2. Enter the following within the VM terminal: `python project.py`
+3. You should see a message letting you know that the server is now running.
+4. Next, open a browser and visit [http://localhost:5000/](http://localhost:5000/)
+5. You should see the main webpage appear, allowing you to view all teams.
 
 _NOTE: If you're signed in using Google accounts, you should be able to add, edit, and delete both players and teams in the database._
 
@@ -178,6 +179,11 @@ _players table:_
 
 
 ## Code Design
+1. [Code Design: project.py](#projectpy-file)
+2. [Code Design: database_setup.py](#database_setuppy-file)
+3. [Code Design: createTeams.py](#createteamspy-file)
+[Admin Usage](#admin-usage)
+
 
 #### project.py file
 This project is largely controlled by the project.py file.
@@ -241,7 +247,53 @@ Project.py consists of five main sections:
 [Back to Index](#index)
 
 
+## Admin Usage
+#### Authenticating
+1. Near rop-right corner of any page, select the "Sign In/Sign Out" link
+2. Select the Google sign-in button
+3. In the pop-up window, follow the instructions to sign in using your Google account
+4. You'll see a message confirming you've been successfully signed in, or letting you know there was an error, and then redirected to the "Teams" page
+
+#### Adding a Team
+1. Near the bottom of the "Teams" page, select the "Add a Team" link
+2. Be sure to fill in all required fields
+3. Select the Conference and Division for your new team
+4. Select the "Create" Button to continue, or "Cancel / Back to Teams" to cancel
+
+#### Editing a Team
+1. From the "Teams" page, select "Edit Team" link below the team you'd like to edit
+2. Note that the form contains the existing information, including a note about the team's Conference and Division
+3. Be sure to fill in all required fields on the form as you'd like to adjust them
+4. Select the "Edit" Button to continue, or "Cancel / Back to Teams" to cancel
+
+#### Adding a Player
+1. From the "Teams" page, select the "View Roster" link below the team your new player should be joining
+2. Near the bottom of the "Roster" page, select the "Add a Player" link
+3. Be sure to fill in all required fields
+4. Select the "Create" Button to continue, or "Cancel / Back to Teams" to cancel
+
+#### Editing a Player
+1. From the "Teams" page, select the "View Roster" link below the team your target player is rostered on
+2. From the "Roster" page, select the "View Bio" link below the player you'd like to edit
+3. Near the bottom of the "Player Bio" page, select the "Edit Player" link
+4. Be sure to fill in all required fields on the form as you'd like to adjust them
+5. Select the "Create" Button to continue, or "Cancel / Back to Teams" to cancel
+
+#### Deleting a Team
+1. From the "Teams" page, select the "Edit Team" link below the team you'd like to remove
+2. From the "Edit Team" page, select the "Delete Team" link near the bottom of the page
+3. Select the "Delete" button to continue, or "Cancel / Back to Teams" to cancel
+
+#### Deleting a Player
+1. From the "Teams" page, select the "View Roster" link below the team your target player is rostered on
+2. From the "Roster" page, select the "View Bio" link below the player you'd like to remove
+3. From the bottom of the "View Bio" page, select the "Delete Player" link
+3. Select the "Delete" button to continue, or "Cancel / Back to Teams" to cancel
+
+
+
 ## Thanks & Acknowledgement
-Special thanks to the Udacity Mentors, who've helped tremendously.
+- Thanks to my wife Sarah, for encouraging me and creating safe & quiet pockets in an otherwise chaotic house for me to work.
+- Special thanks also to the Udacity Mentors, who've helped tremendously.
 
 [Back to Index](#index)
