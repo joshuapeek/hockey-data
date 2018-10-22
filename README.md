@@ -15,7 +15,8 @@ hockey-database was written by Joshua Peek.
 3. ['hockey-database' Table Structures](#hockey-database-table-structures)
 4. [Code Design](#code-design)
 5. [Admin Usage](#admin-usage)
-6. [Thanks & Acknowledgement](#thanks--acknowledgement)
+6. [JSON Endpoint Usage](#json-endpoint-usage)
+7. [Thanks & Acknowledgement](#thanks--acknowledgement)
 
 
 
@@ -302,6 +303,27 @@ Project.py consists of five main sections:
 2. From the "Roster" page, select the "View Bio" link below the player you'd like to remove
 3. From the bottom of the "View Bio" page, select the "Delete Player" link
 3. Select the "Delete" button to continue, or "Cancel / Back to Teams" to cancel
+
+
+## JSON Endpoint Usage
+The "Teams", "Roster", and "Player Bio" pages can all be accessed via special JSON endpoint.
+These endpoints will return the same data as their standard counterparts, except in serialized format.
+The JSON endpoints can be accessed by simply adding `/JSON` to the end of any "Teams", "Roster", or "Player Bio" page.
+
+#### Examples of JSON URL Structure and Return Data
+"Teams" page accessed in JSON format: `http://localhost:5000/JSON`
+- Returns a list of teams in the database
+- Returned data for each team includes: city, conference, division, id, name
+
+Add in any team's `id` value after the main URI (but before `/JSON`) to access the "Roster"
+Example "Roster" page URI, accessed in JSON format: `http://localhost:5000/8/JSON`
+- Returns a list of players in the database for team id specified
+- Returned data for each player includes: bio, birthCity, birthLocation, birthNation, birthdate, firstName, height, id, lastName, position, team_id, weight
+
+Add in any player's `id` value after their team's `id` (but before `/JSON`) to access the "Player Bio"
+Example "Player Bio" page URI, accessed in JSON format: `http://localhost:5000/8/1/JSON`
+- Returns stored data for player specified, on team specified
+- Returned data for each player includes: bio, birthCity, birthLocation, birthNation, birthdate, firstName, height, id, lastName, position, team_id, weight
 
 
 
