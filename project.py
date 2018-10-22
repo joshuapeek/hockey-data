@@ -410,6 +410,9 @@ def deleteTeamPage(team_id):
         flash("Team Removed!")
         return redirect(url_for('mainPage'))
     else:
+        if teamToDelete.user_id != login_session['user_id']:
+            flash("You are not authorized to delete this team.")
+            return redirect('/')
         return render_template('deleteTeam.html', i=teamToDelete)
 
 
@@ -432,6 +435,9 @@ def deletePlayerPage(team_id, player_id):
         flash("Player Removed!")
         return redirect(url_for('teamPage', team_id=team_id))
     else:
+        if playerToDelete.user_id != login_session['user_id']:
+            flash("You are not authorized to delete this player.")
+            return redirect(url_for('playerPage', team_id=team_id, player_id=player_id))
         return render_template('deletePlayer.html', i=playerToDelete)
 
 
