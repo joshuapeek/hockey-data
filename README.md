@@ -92,7 +92,7 @@ You'll also need to install the following libraries for use with Python. For eac
 - [For help installing Requests, visit this page.](http://docs.python-requests.org/en/master/user/install/#install)
 - [Documentation found here.](http://docs.python-requests.org/en/master/)
 
-###### Httplib2
+###### httplib2
 - Terminal install `pip install httplib2`
 - [Documentation found here.](https://httplib2.readthedocs.io/en/latest/)
 
@@ -196,7 +196,7 @@ _players table:_
 1. [Code Design: project.py](#projectpy-file)
 2. [Code Design: database_setup.py](#database_setuppy-file)
 3. [Code Design: createTeams.py](#createteamspy-file)
-[Admin Usage](#admin-usage)
+4. [Admin Usage](#admin-usage)
 
 
 #### project.py file
@@ -318,12 +318,14 @@ The JSON endpoints can be accessed by simply adding `/JSON` to the end of any "T
 
 ###### Roster Page
 Add in any team's `id` value after the main URI (but before `/JSON`) to access the "Roster"
+
 Example "Roster" page URI, accessed in JSON format: `http://localhost:5000/8/JSON`
 - Returns a list of players in the database for team id specified
 - Returned data for each player includes: bio, birthCity, birthLocation, birthNation, birthdate, firstName, height, id, lastName, position, team_id, weight
 
 ###### Player Bio Page
 Add in any player's `id` value after their team's `id` (but before `/JSON`) to access the "Player Bio"
+
 Example "Player Bio" page URI, accessed in JSON format: `http://localhost:5000/8/1/JSON`
 - Returns stored data for player specified, on team specified
 - Returned data for each player includes: bio, birthCity, birthLocation, birthNation, birthdate, firstName, height, id, lastName, position, team_id, weight
