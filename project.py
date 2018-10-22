@@ -379,6 +379,10 @@ def editPlayerPage(team_id, player_id):
         return redirect(url_for(
             'playerPage', team_id=team_id, player_id=editedPlayer.id))
     else:
+        if editedPlayer.user_id != login_session['user_id']:
+            flash("You are not authorized to edit this player.")
+            return redirect(url_for('playerPage',
+                team_id=team_id, player_id=editedPlayer.id))
         return render_template(
             'editPlayer.html', i=editedPlayer, team_id=team_id)
 
