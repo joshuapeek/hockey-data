@@ -91,6 +91,13 @@ You'll also need to install the following libraries for use with Python. For eac
 - [For help installing Requests, visit this page.](http://docs.python-requests.org/en/master/user/install/#install)
 - [Documentation found here.](http://docs.python-requests.org/en/master/)
 
+###### Httplib2
+- Terminal install `pip install httplib2`
+- [Documentation found here.](https://httplib2.readthedocs.io/en/latest/)
+
+
+
+
 [Back to Index](#index)
 
 #### hockey-database itself
