@@ -285,6 +285,9 @@ def editTeamPage(team_id):
     editedTeam = session.query(Team).filter_by(id=team_id).one()
     # If GET, serve form; If POST receive data, commit edited team to db
     if request.method == 'POST':
+        # Ensure user is signed in
+        if 'username' not in login_session:
+            return redirect('/login')
         if request.form['city']:
             editedTeam.city = request.form['city']
             editedTeam.name = request.form['name']
@@ -309,6 +312,9 @@ def editPlayerPage(team_id, player_id):
         Player).filter_by(team_id=team_id, id=player_id).one()
     # If GET, serve form; If POST receive data, commit edited player to db
     if request.method == 'POST':
+        # Ensure user is signed in
+        if 'username' not in login_session:
+            return redirect('/login')
         if request.form['firstName']:
             editedPlayer.firstName = request.form['firstName']
             editedPlayer.lastName = request.form['lastName']
@@ -342,6 +348,9 @@ def deleteTeamPage(team_id):
         Team).filter_by(id=team_id).one()
     # If GET, serve form; If POST remove team from db
     if request.method == 'POST':
+        # Ensure user is signed in
+        if 'username' not in login_session:
+            return redirect('/login')
         session.delete(teamToDelete)
         session.commit()
         flash("Team Removed!")
@@ -361,6 +370,9 @@ def deletePlayerPage(team_id, player_id):
         Player).filter_by(team_id=team_id, id=player_id).one()
     # If GET, serve form; If POST remove player from db
     if request.method == 'POST':
+        # Ensure user is signed in
+        if 'username' not in login_session:
+            return redirect('/login')
         session.delete(playerToDelete)
         session.commit()
         flash("Player Removed!")
