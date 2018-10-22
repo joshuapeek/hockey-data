@@ -160,17 +160,29 @@ The project must meet the following requirements:
 ## 'hockey-database' Table Structures
 There are two tables in the project's database: "team" and "players". Their structures are described below.
 
+
+_user table:_
+
+|Column|Key?   |Type       |
+|------|-------|-----------|
+|id|Primary|integer|
+|username||text|
+|email||text|
+|picture||text|
+
 _team table:_
 
 |Column|Key?   |Type       |
 |------|-------|-----------|
-|id|primary|integer    |
+|id|Primary|integer    |
 |city||text|
 |name||text|
 |conference ||text|
 |division||text|
+|user_id|Foreign|integer|
+|user|relationship|text|
 
-_players table:_
+_player table:_
 
 |Column|Key?   |Type       |
 |------|-------|-----------|
@@ -179,13 +191,15 @@ _players table:_
 |lastName||text|
 |position||text|
 |team_id||text|
-|team||text|
+|team|relationship|text|
 |height||text|
 |weight||text|
 |birthdate||text|
 |birthCity||text|
 |birthLocation||text|
 |bio||text|
+|user_id|Foreign|integer|
+|user|relationship|text|
 
 [Back to Index](#index)
 
@@ -268,6 +282,10 @@ Project.py consists of five main sections:
 3. In the pop-up window, follow the instructions to sign in using your Google account
 4. You'll see a message confirming you've been successfully signed in, or letting you know there was an error, and then redirected to the "Teams" page
 
+After authentication, user's email will be checked against the `user` table for a match.
+If a match exists, this user profile will be linked any new teams or players the user creates.
+This ensures the user will be able to edit their own entries in the future.
+
 #### Adding a Team
 1. Near the bottom of the "Teams" page, select the "Add a Team" link
 2. Be sure to fill in all required fields
@@ -275,6 +293,9 @@ Project.py consists of five main sections:
 4. Select the "Create" Button to continue, or "Cancel / Back to Teams" to cancel
 
 #### Editing a Team
+Note that you will not be able to edit any teams or players unless:
+- You were the user who created them, or
+- You are the superadmin who created the program (Joshua Peek)
 1. From the "Teams" page, select "Edit Team" link below the team you'd like to edit
 2. Note that the form contains the existing information, including a note about the team's Conference and Division
 3. Be sure to fill in all required fields on the form as you'd like to adjust them
