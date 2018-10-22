@@ -17,9 +17,9 @@ hockey-database was written by Joshua Peek.
 5. [Project Requirements](#project-requirements)
 6. ['hockey-database' Table Structures](#hockey-database-table-structures)
 7. [Code Design](#code-design)
-8. [Code Design: project.py](#project.py-file)
-8. [Code Design: database_setup.py](#database-setup.py-file)
-8. [Code Design: createTeams.py](#createteams.py-file)
+8. [Code Design: project.py](#projectpy-file)
+8. [Code Design: database_setup.py](#database_setuppy-file)
+8. [Code Design: createTeams.py](#createteamspy-file)
 8. [Thanks & Acknowledgement](#thanks--acknowledgement)
 
 
