@@ -345,6 +345,9 @@ def editTeamPage(team_id):
         flash("Team Edited!")
         return redirect(url_for('mainPage'))
     else:
+        if editedTeam.user_id != login_session['user_id']:
+            flash("You are not authorized to edit this team.")
+            return redirect('/')
         return render_template('editTeam.html', i=editedTeam)
 
 
