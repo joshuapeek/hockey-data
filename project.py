@@ -50,12 +50,12 @@ def users():
     return output
 
 
-
 # Main page - displays teams in db
 @app.route('/')
 def mainPage():
     teams = session.query(Team).all()
     return render_template('teams.html', teams=teams)
+
 
 # Team page - displays players in db, from a given team
 @app.route('/<int:team_id>/')
@@ -64,7 +64,9 @@ def teamPage(team_id):
     players = session.query(Player).filter_by(team_id=team_id).all()
     creator = getUserInfo(team.user_id)
     return render_template('roster.html',
-        team=team, players=players, creator=creator)
+                           team=team,
+                           players=players,
+                           creator=creator)
 
 
 # Player page - displays player info in db, for a given team, player
@@ -75,8 +77,10 @@ def playerPage(team_id, player_id):
     player = session.query(Player).filter_by(
         team_id=team_id, id=player_id).one()
     creator = getUserInfo(player.user_id)
-    return render_template('player.html', team=team, player=player,
-        creator=creator)
+    return render_template('player.html',
+                           team=team,
+                           player=player,
+                           creator=creator)
 
 
 # API USE //////////////////////////////////////
@@ -197,12 +201,13 @@ def gconnect():
     # Check if user exists in user table, create entry if no
     user_id = getUserID(login_session['email'])
     if not user_id:
-	    createUser(login_session)
+        createUser(login_session)
     login_session['user_id'] = user_id
     response = make_response(json.dumps(
      'Signed in Successfully!'), 200)
     response.headers['Content-Type'] = 'application/json'
     return response
+
 
 # Admin Sign-out: Revokes current user's token, resets login_session
 @app.route('/gdisconnect')
@@ -234,6 +239,7 @@ def gdisconnect():
         flash("Failed to log out")
         return redirect('/')
 
+
 # Create user record in users table
 def createUser(login_session):
     newUser = User(username=login_session['username'],
@@ -253,16 +259,15 @@ def getUserID(email):
     except:
         return None
 
+
 # Get user object from user_id
 def getUserInfo(user_id):
     user = session.query(User).filter_by(id=user_id).one()
     return user
 
 
-
 # ADMIN USE //////////////////////////////////////
 # These pages are served for admin users
-
 
 # Admin Control page - displays admin controls for editing teams, players
 @app.route('/admin/')
@@ -385,7 +390,8 @@ def editPlayerPage(team_id, player_id):
         if editedPlayer.user_id != login_session['user_id']:
             flash("You are not authorized to edit this player.")
             return redirect(url_for('playerPage',
-                team_id=team_id, player_id=editedPlayer.id))
+                                    team_id=team_id,
+                                    player_id=editedPlayer.id))
         return render_template(
             'editPlayer.html', i=editedPlayer, team_id=team_id)
 
@@ -437,7 +443,9 @@ def deletePlayerPage(team_id, player_id):
     else:
         if playerToDelete.user_id != login_session['user_id']:
             flash("You are not authorized to delete this player.")
-            return redirect(url_for('playerPage', team_id=team_id, player_id=player_id))
+            return redirect(url_for('playerPage',
+                                    team_id=team_id,
+                                    player_id=player_id))
         return render_template('deletePlayer.html', i=playerToDelete)
 
 
