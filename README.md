@@ -177,7 +177,7 @@ _team table:_
 |id|Primary|integer    |
 |city||text|
 |name||text|
-|conference ||text|
+|conference||text|
 |division||text|
 |user_id|Foreign|integer|
 |user|relationship|text|
@@ -190,7 +190,7 @@ _player table:_
 |firstName||text|
 |lastName||text|
 |position||text|
-|team_id||text|
+|team_id|Foreign|text|
 |team|relationship|text|
 |height||text|
 |weight||text|
